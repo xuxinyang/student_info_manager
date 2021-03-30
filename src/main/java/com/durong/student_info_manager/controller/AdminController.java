@@ -13,7 +13,7 @@ public class AdminController {
     AdminService adminService;
     SHAEncrypt shaEncrypt = new SHAEncrypt();
 
-        @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
     public String login() {
         return "admin/login";
     }
@@ -24,14 +24,14 @@ public class AdminController {
         System.out.println(userId);
         Integer uid = Integer.parseInt(userId);
         if (adminService.findById(uid) == null) {
-            return "login";
+            return "admin/login";
         } else {
             Admin admin = adminService.findId(uid);
             if (shaEncrypt.validatePwd(password, admin.getAdminPassword())) {
                 model.addAttribute("admin", admin);
-                return "/admin/manager";
+                return "admin/main";
             } else {
-                return "login";
+                return "admin/login";
             }
         }
     }
@@ -41,7 +41,7 @@ public class AdminController {
         return "admin/login";
     }
 
-    @RequestMapping(value = "/manager")
+    @RequestMapping(value = "/admin")
     public String passwordValidate(Model model, String id, String password) {
 
         Admin admin;
@@ -52,7 +52,7 @@ public class AdminController {
         } else {
             admin = adminService.findId(adminId);
             model.addAttribute("admin", admin);
-            return "admin/manager";
+            return "admin/main";
         }
     }
 }

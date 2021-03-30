@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | 管理员登陆</title>
+    <title>学生信息管理系统</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -18,16 +18,18 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="../../index2.html"><b>Admin</b>LTE</a>
+        <a href="../../index2.html">管理员登陆</a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">登陆之后进行操作</p>
 
-            <form action="../../index3.html" method="post">
+            <form th:action="@{/loginControl}" method="post">
                 <div class="input-group mb-3">
-                    <input class="form-control" placeholder="Username" type="text"/>
+                    <label>
+                        <input class="form-control" placeholder="Username" type="text" name="userId"/>
+                    </label>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-account"></span>
@@ -35,7 +37,9 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Password"/>
+                    <label>
+                        <input type="password" class="form-control" placeholder="Password" name="password"/>
+                    </label>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -59,9 +63,6 @@
                 </div>
             </form>
             <!-- /.social-auth-links -->
-            <p class="mb-0">
-                <a href="register.html" class="text-center">注册新账户</a>
-            </p>
         </div>
         <!-- /.login-card-body -->
     </div>

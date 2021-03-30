@@ -36,8 +36,7 @@ public class AdminService {
     // find admin
     public String findById(Integer adminId) {
         Admin admin = adminRepository.findById(adminId).get();
-        String password = admin.getAdminPassword();
-        return password;
+        return admin.getAdminPassword();
     }
 
     public Admin findId(Integer adminId) {
