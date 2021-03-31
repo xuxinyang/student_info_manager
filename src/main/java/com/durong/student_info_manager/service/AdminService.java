@@ -1,18 +1,17 @@
 package com.durong.student_info_manager.service;
 
-import com.durong.student_info_manager.entity.Admin;
+import com.durong.student_info_manager.domain.Admin;
 import com.durong.student_info_manager.repository.AdminRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 @Service
 public class AdminService {
 
-    @Resource
-    AdminRepository adminRepository;
+    @Autowired
+    AdminRepository adminRepository = null;
 
-    public void create(Integer adminId, String adminName, String adminPassword) {
+    public void create(String adminId, String adminName, String adminPassword) {
         Admin admin = new Admin();
         admin.setAdminId(adminId);
         admin.setAdminName(adminName);
@@ -20,26 +19,18 @@ public class AdminService {
         adminRepository.save(admin);
     }
 
-    public void delete(Integer adminId) {
-        Admin admin = adminRepository.findById(adminId).get();
-        adminRepository.delete(admin);
-    }
-
     // update administrator password
-    public void update(Integer adminId, String adminName, String adminPassword) {
-        Admin admin = adminRepository.findById(adminId).get();
-        admin.setAdminName(adminName);
-        admin.setAdminPassword(adminPassword);
-        adminRepository.save(admin);
+    public void update(String adminId, String adminName, String adminPassword) {
+        Admin admin = adminRepository.findById(adminId).orElse(null);
+        if (admin != null) {
+            admin.setAdminName(adminName);
+            admin.setAdminPassword(adminPassword);
+            adminRepository.save(admin);
+        }
     }
 
-    // find admin
-    public String findById(Integer adminId) {
-        Admin admin = adminRepository.findById(adminId).get();
-        return admin.getAdminPassword();
+    public Admin findId(String adminId) {
+        return adminRepository.findById(adminId).orElse(null);
     }
 
-    public Admin findId(Integer adminId) {
-        return adminRepository.findById(adminId).get();
-    }
 }

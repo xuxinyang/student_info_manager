@@ -1,6 +1,6 @@
 package com.durong.student_info_manager.repository;
 
-import com.durong.student_info_manager.entity.Course;
+import com.durong.student_info_manager.domain.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.io.Serializable;
