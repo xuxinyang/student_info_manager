@@ -27,45 +27,65 @@ public class LoginController {
     RoleService roleService;
     SHAEncrypt shaEncrypt = new SHAEncrypt();
 
-    @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
-    public String login() {
-        return "login";
+    // Admin Login Control
+    @RequestMapping(value = "/adminLogin", method = {RequestMethod.GET, RequestMethod.POST})
+    public String adminLogin() {
+        return "admin/login";
     }
 
-    @RequestMapping(value = "/loginControl", method = {RequestMethod.GET, RequestMethod.POST})
-    public String loginControl(Model model, String roleId, String password) {
+    @RequestMapping(value = "/adminLoginControl", method = {RequestMethod.GET, RequestMethod.POST})
+    public String adminLoginControl(Model model, String adminId, String adminPassword) {
+        Admin admin = adminService.findById(adminId);
+        if (admin == null)
+        {
+            return "admin/login";
+        } else {
+            System.out.println(adminId);
+            System.out.println(admin);
+//                if (shaEncrypt.validatePwd(password, admin.getAdminPassword())) {
+            if (admin.getAdminPassword().equals(adminPassword)) {
+                model.addAttribute("admin", admin);
+                return "admin/main";
+            } else {
+                return "admin/login";
+            }
+        }
+
+    }
+    // User Login Control
+    @RequestMapping(value = "/userLogin", method = {RequestMethod.GET, RequestMethod.POST})
+    public String userLogin() {
+        return "common/login";
+    }
+
+
+    @RequestMapping(value = "/userLoginControl", method = {RequestMethod.GET, RequestMethod.POST})
+    public String userLoginControl(Model model, String roleId, String password) {
 
         System.out.println(roleId);
         if(roleService.findById(roleId) == null) {
-            return "login";
+            return "common/login";
         } else {
             if(roleService.findById(roleId).getRoleWeight() == 1) {
                 Student student = studentService.findById(roleId);
 //                if (shaEncrypt.validatePwd(password, student.getStudentPassword())) {
                 if (student.getStudentPassword().equals(password)) {
                     model.addAttribute("student", student);
-                    return "student/main";
+                    return "student/stuIndex";
                 } else {
-                    return "login";
+                    return "common/login";
                 }
             }
             else if (roleService.findById(roleId).getRoleWeight() == 2) {
                 Teacher teacher = teacherService.findById(roleId);
                 if (shaEncrypt.validatePwd(password, teacher.getTeacherPassword())) {
                     model.addAttribute("teacher", teacher);
-                    return "teacher/main";
+                    return "teacher/teachIndex";
                 } else {
-                    return "login";
+                    return "common/login";
                 }
             } else {
-                Admin admin = adminService.findId(roleId);
-//                if (shaEncrypt.validatePwd(password, admin.getAdminPassword())) {
-                    if (admin.getAdminPassword().equals(password)) {
-                    model.addAttribute("admin", admin);
-                    return "admin/main";
-                } else {
-                    return "login";
-                }
+                return "common/login";
             }
         }
     }

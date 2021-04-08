@@ -10,7 +10,11 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Serializable> {
     public List<Student> findByStudentId(String studentId);
+
     public List<Student> findByStudentName(String studentName);
+
     public List<Student> findByStudentAge(Integer studentAge);
-    public List<Student> findByStudentNameAndStudentGender(String studentName, String studentGender);
+
+    public List<Student> findByStudentClassAndStudentMajority(
+            String studentClass, Integer studentMajority);
 }

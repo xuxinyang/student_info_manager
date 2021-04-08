@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>学生信息管理系统</title>
+		<title>登录页面</title>
 		<meta name="description" content="Restyling jQuery UI Widgets and Elements" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
@@ -24,7 +24,7 @@
 		<script src='js/jquery.mobile.custom.min.js'></script>
 		<![endif]-->
 	</head>
-	<body class="login-layout blur-login" text-align="center">
+	<body class="login-layout blur-login">
 		<div class="main-container">
 			<div class="main-content">
 				<div class="row">
@@ -32,13 +32,13 @@
 						<div class="login-container">
 							<div class="center">
 								<h1>
-									<span class="white">系统登陆</span>
+									<span class="white">管理员登陆</span>
 								</h1>
 							</div>
 							<div class="space-6"></div>
 							<div class="position-relative">
 								<div id="login-box" class="login-box visible widget-box no-border">
-									<form th:action="@{/loginControl}" th:method="post">
+									<form th:action="@{/adminLoginControl}" th:method="post">
 									<div class="widget-body">
 										<div class="widget-main">
 											<h4 class="header blue lighter bigger">
@@ -50,13 +50,13 @@
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" name="roleId" id="id" placeholder="账号" th:required="required" />
+															<input type="text" class="form-control" name="adminId" id="id" placeholder="账号" th:required="required" />
 															<i class="ace-icon fa fa-user"></i>
 														</span>
 													</label>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" name="password" id="password" placeholder="密码" th:required="required" minlength="6" />
+															<input type="password" class="form-control" name="adminPassword" id="password" placeholder="密码" th:required="required" minlength="6" />
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
 													</label>

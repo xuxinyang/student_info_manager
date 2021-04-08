@@ -17,13 +17,13 @@ public class SHAEncrypt {
     /**
      * 生成SALT的数组(86)
      */
-    private final String[] SALT_ARR = { "a", "b", "c", "d", "e", "f", "g", "h",
+    private final String[] SALT_ARR = {"a", "b", "c", "d", "e", "f", "g", "h",
             "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u",
             "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H",
             "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
             "V", "W", "X", "Y", "Z", "1", "2", "3", "4", "5", "6", "7", "8",
             "9", "0", ".", "-", "*", "/", "'", ":", ";", ">", "<", "~", "!",
-            "@", "#", "$", "%", "^", "&", "(", ")", "{", "}", "[", "]", "|" };
+            "@", "#", "$", "%", "^", "&", "(", ")", "{", "}", "[", "]", "|"};
     /**
      * 循环加密次数
      */
@@ -53,8 +53,7 @@ public class SHAEncrypt {
      * 8. 连接移位后的密文和移位后的变形salt值字串<br>
      * 9. 对连接字串右移8位作为最终加密结果<br>
      *
-     * @param pwd
-     *            密码明文
+     * @param pwd 密码明文
      * @return 加密后的密码
      */
     public String encryptPwd(String pwd) {
@@ -75,10 +74,8 @@ public class SHAEncrypt {
      * 7. 连接移位后的密文和移位后的变形salt值字串<br>
      * 8. 对连接字串右移8位作为最终加密结果<br>
      *
-     * @param pwd
-     *            明文密码
-     * @param salt
-     *            用于加密的salt值
+     * @param pwd  明文密码
+     * @param salt 用于加密的salt值
      * @return
      */
     private String encryptPwdWithSalt(String pwd, String salt) {
@@ -106,10 +103,8 @@ public class SHAEncrypt {
      * 2. 对明文密码使用salt字串再次进行加密 <br>
      * 3. 两个密文是否一致 <br>
      *
-     * @param pwd
-     *            明文密码
-     * @param encPwd
-     *            密文密码
+     * @param pwd    明文密码
+     * @param encPwd 密文密码
      * @return 校验结果
      */
     public boolean validatePwd(String pwd, String encPwd) {
@@ -131,8 +126,7 @@ public class SHAEncrypt {
      * 3. 对salt值的16进制字节数组字符串右移4位 <br>
      * 4. 将变形后的salt值从16进制字节数组字符串还原成原来的字符串形式 <br>
      *
-     * @param encPwd
-     *            密文密码
+     * @param encPwd 密文密码
      * @return 加密时使用的salt字串，获取出错则返回""
      */
     private String getSaltFromEncryptedPwd(String encPwd) {
@@ -140,7 +134,7 @@ public class SHAEncrypt {
         try {
             String leftMoved = this.rightMove(encPwd, -8);
             int hexSaltLength = SALT_LENGTH * 2;
-            if(encPwd.length()<hexSaltLength){
+            if (encPwd.length() < hexSaltLength) {
                 // 加密密码长度比16进制字节数组字串的salt值短，不可能获取得到正确的salt值
                 return "";
             }
@@ -155,7 +149,6 @@ public class SHAEncrypt {
     }
 
     /**
-     *
      * 获得随机SALT值
      *
      * @return 返回一个包含字母、数字、特殊字符的16位随机数
@@ -175,10 +168,8 @@ public class SHAEncrypt {
     /**
      * 密码变形（前后补N位0）
      *
-     * @param pwd
-     *            密码原文
-     * @param n
-     *            补0的个数
+     * @param pwd 密码原文
+     * @param n   补0的个数
      * @return 返回一个密码前后补N位0的字符串
      */
     private String transform(String pwd, int n) {
@@ -190,13 +181,10 @@ public class SHAEncrypt {
     }
 
     /**
-     *
      * 把指定字符串右移N位,若N<0则为左移
      *
-     * @param src
-     *            源字符串
-     * @param n
-     *            右移的位数
+     * @param src 源字符串
+     * @param n   右移的位数
      * @return 返回一个右移N位的字符串
      */
     private String rightMove(String src, int n) {
@@ -227,20 +215,17 @@ public class SHAEncrypt {
     }
 
     /**
-     *
      * 把对应的随机数分成2部分，前半部分8个字符，调换顺序后把变形密码加到中间
      *
-     * @param pwd
-     *            变形密码
-     * @param salt
-     *            对应的随机数
+     * @param pwd  变形密码
+     * @param salt 对应的随机数
      * @return 返回一个随机数与变形密码连接的字符串
      */
     private String joinSaltAndPwd(String salt, String pwd) {
-        if(salt.length()!=SALT_LENGTH){
+        if (salt.length() != SALT_LENGTH) {
             // salt值的长度与给定的不符（校验的时候可能会出现）
             // 返回pwd+salt
-            return pwd+salt;
+            return pwd + salt;
         }
         String temp1 = salt.substring(0, 8);
         String temp2 = salt.substring(8, salt.length());
@@ -248,11 +233,9 @@ public class SHAEncrypt {
     }
 
     /**
-     *
      * 使用加密算法进行多次加密
      *
-     * @param joinStr
-     *            连接字符串
+     * @param joinStr 连接字符串
      * @return 返回一个多次加密后的字符串
      */
     private String encodeJoinStr(String joinStr) {
@@ -296,7 +279,7 @@ public class SHAEncrypt {
      */
     private byte[] hex2Bytes(String hexStr) {
         if ((hexStr.length() % 2) != 0) {
-            return new byte[] {};
+            return new byte[]{};
         }
         byte[] ret = new byte[hexStr.length() / 2];
         for (int i = 0; i < hexStr.length() / 2; i++) {
@@ -308,7 +291,6 @@ public class SHAEncrypt {
     }
 
     /**
-     *
      * 利用SHA-256对源字符串进行加密
      *
      * @param src
@@ -332,17 +314,17 @@ public class SHAEncrypt {
         }
     }
     /**
-    public static void main(String args[]) throws Exception {
-        SHAEncrypt demo = new SHAEncrypt();
-        String str = "12testnihao";
-        long startTime = System.currentTimeMillis();
-        String encPwd = demo.encryptPwd(str);
-        System.out.println("encrypt time costs:"
-                + (System.currentTimeMillis() - startTime));
-        System.out.println("encrypted pwd:" + encPwd + ",length:"
-                + encPwd.length());
-        System.out.println(demo.validatePwd(str, encPwd));
-        System.out.println(new String(demo.hex2Bytes(encPwd), "UTF-8"));
-    }*/
+     public static void main(String args[]) throws Exception {
+     SHAEncrypt demo = new SHAEncrypt();
+     String str = "12testnihao";
+     long startTime = System.currentTimeMillis();
+     String encPwd = demo.encryptPwd(str);
+     System.out.println("encrypt time costs:"
+     + (System.currentTimeMillis() - startTime));
+     System.out.println("encrypted pwd:" + encPwd + ",length:"
+     + encPwd.length());
+     System.out.println(demo.validatePwd(str, encPwd));
+     System.out.println(new String(demo.hex2Bytes(encPwd), "UTF-8"));
+     }*/
 
 }

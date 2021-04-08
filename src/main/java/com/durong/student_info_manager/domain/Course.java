@@ -14,14 +14,17 @@ public class Course {
     private Integer courseId;
     @Column(name = "course_name")
     private String courseName;
+    @Column(name = "course_status")
+    private String courseStatus;
 
     public Course() {
 
     }
 
-    public Course(Integer courseId, String courseName) {
+    public Course(Integer courseId, String courseName, String courseStatus) {
         this.courseId = courseId;
         this.courseName = courseName;
+        this.courseStatus = courseStatus;
     }
 
     public Integer getCourseId() {
@@ -40,12 +43,20 @@ public class Course {
         this.courseName = courseName;
     }
 
+    public String getCourseStatus() {
+        return courseStatus;
+    }
+
+    public void setCourseStatus(String courseStatus) {
+        this.courseStatus = courseStatus;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
                 "courseId=" + courseId +
                 ", courseName='" + courseName + '\'' +
+                ", courseStatus='" + courseStatus + '\'' +
                 '}';
     }
-
 }

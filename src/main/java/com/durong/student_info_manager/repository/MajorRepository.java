@@ -7,6 +7,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface MajorRepository extends JpaRepository<Major, Serializable> {
-    public List<Major> findByMajorId(Integer majorId);
-    public List<Major> findByMajorName(String majorName);
+
+    public List<Major> findByDepartmentId(Integer departmentId);
 }

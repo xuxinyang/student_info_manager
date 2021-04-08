@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class AdminService {
 
     @Autowired
-    AdminRepository adminRepository = null;
+    AdminRepository adminRepository;
 
     public void create(String adminId, String adminName, String adminPassword) {
         Admin admin = new Admin();
@@ -29,7 +29,7 @@ public class AdminService {
         }
     }
 
-    public Admin findId(String adminId) {
+    public Admin findById(String adminId) {
         return adminRepository.findById(adminId).orElse(null);
     }
 

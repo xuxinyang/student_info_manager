@@ -14,14 +14,14 @@ public class Grade {
     @Column(name = "grade_score")
     private Float gradeScore;
     @Column(name = "course_id")
-    private String courseId;
+    private Integer courseId;
     @Column(name = "student_id")
     private String studentId;
 
     public Grade() {
     }
 
-    public Grade(Integer gradeId, Float gradeScore, String courseId, String studentId) {
+    public Grade(Integer gradeId, Float gradeScore, Integer courseId, String studentId) {
         this.gradeId = gradeId;
         this.gradeScore = gradeScore;
         this.courseId = courseId;
@@ -44,11 +44,11 @@ public class Grade {
         this.gradeScore = gradeScore;
     }
 
-    public String getCourseId() {
+    public Integer getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(String courseId) {
+    public void setCourseId(Integer courseId) {
         this.courseId = courseId;
     }
 

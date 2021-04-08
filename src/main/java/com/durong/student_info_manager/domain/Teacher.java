@@ -21,7 +21,7 @@ public class Teacher {
     @Column(name = "teacher_gender")
     private String teacherGender;
     @Column(name = "teacher_department")
-    private String teacherDepartment;
+    private Integer teacherDepartment;
     @Column(name = "teacher_native")
     private String teacherNative;
     @Column(name = "teacher_address")
@@ -37,7 +37,7 @@ public class Teacher {
     }
 
     public Teacher(String teacherId, String teacherName, String password,
-                   Integer teacherAge, String teacherGender, String teacherDepartment,
+                   Integer teacherAge, String teacherGender, Integer teacherDepartment,
                    String teacherNative, String teacherAddress, String teacherPhone,
                    String teacherEmail, String teacherProfile) {
         this.teacherId = teacherId;
@@ -93,11 +93,11 @@ public class Teacher {
         this.teacherGender = teacherGender;
     }
 
-    public String getTeacherDepartment() {
+    public Integer getTeacherDepartment() {
         return teacherDepartment;
     }
 
-    public void setTeacherDepartment(String teacherDepartment) {
+    public void setTeacherDepartment(Integer teacherDepartment) {
         this.teacherDepartment = teacherDepartment;
     }
 

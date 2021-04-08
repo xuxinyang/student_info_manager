@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface CourseRepository extends JpaRepository<Course, Serializable> {
-    public List<Course> findByCourseId(Integer courseId);
-    public List<Course> findByCourseName(String courseName);
+
+    public List<Course> findByCourseStatus(String courseStatus);
 
 }

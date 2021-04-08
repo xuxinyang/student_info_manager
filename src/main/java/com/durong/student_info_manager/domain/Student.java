@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -21,12 +20,8 @@ public class Student {
     private Integer studentAge;
     @Column(name = "student_gender")
     private String studentGender;
-    @Column(name = "student_birthday")
-    private Date studentBirthDate;
-    @Column(name = "student_department")
-    private String studentDepartment;
     @Column(name = "student_majority")
-    private String studentMajority;
+    private Integer studentMajority;
     @Column(name = "student_class")
     private String studentClass;
     @Column(name = "student_native")
@@ -39,8 +34,6 @@ public class Student {
     private String studentPhone;
     @Column(name = "student_email")
     private String studentEmail;
-    @Column(name = "student_political")
-    private String studentPolitical;
     @Column(name = "student_profile")
     private String studentProfile;
 
@@ -48,18 +41,15 @@ public class Student {
     }
 
     public Student(String studentId, String studentName, String password,
-                   Integer studentAge, String studentGender, Date studentBirthDate,
-                   String studentDepartment, String studentMajority,
+                   Integer studentAge, String studentGender, Integer studentMajority,
                    String studentClass, String studentNative, String studentAddress,
                    String studentIdCard, String studentPhone, String studentEmail,
-                   String studentPolitical, String studentProfile) {
+                   String studentProfile) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.studentPassword = password;
         this.studentAge = studentAge;
         this.studentGender = studentGender;
-        this.studentBirthDate = studentBirthDate;
-        this.studentDepartment = studentDepartment;
         this.studentMajority = studentMajority;
         this.studentClass = studentClass;
         this.studentNative = studentNative;
@@ -67,7 +57,6 @@ public class Student {
         this.studentIdCard = studentIdCard;
         this.studentPhone = studentPhone;
         this.studentEmail = studentEmail;
-        this.studentPolitical = studentPolitical;
         this.studentProfile = studentProfile;
     }
 
@@ -111,27 +100,11 @@ public class Student {
         this.studentGender = studentGender;
     }
 
-    public Date getStudentBirthDate() {
-        return studentBirthDate;
-    }
-
-    public void setStudentBirthDate(Date studentBirthDate) {
-        this.studentBirthDate = studentBirthDate;
-    }
-
-    public String getStudentDepartment() {
-        return studentDepartment;
-    }
-
-    public void setStudentDepartment(String studentDepartment) {
-        this.studentDepartment = studentDepartment;
-    }
-
-    public String getStudentMajority() {
+    public Integer getStudentMajority() {
         return studentMajority;
     }
 
-    public void setStudentMajority(String studentMajority) {
+    public void setStudentMajority(Integer studentMajority) {
         this.studentMajority = studentMajority;
     }
 
@@ -183,14 +156,6 @@ public class Student {
         this.studentEmail = studentEmail;
     }
 
-    public String getStudentPolitical() {
-        return studentPolitical;
-    }
-
-    public void setStudentPolitical(String studentPolitical) {
-        this.studentPolitical = studentPolitical;
-    }
-
     public String getStudentProfile() {
         return studentProfile;
     }
@@ -207,8 +172,6 @@ public class Student {
                 ", studentPassword='" + studentPassword + '\'' +
                 ", studentAge=" + studentAge +
                 ", studentGender='" + studentGender + '\'' +
-                ", studentBirthDate=" + studentBirthDate +
-                ", studentDepartment='" + studentDepartment + '\'' +
                 ", studentMajority='" + studentMajority + '\'' +
                 ", studentClass='" + studentClass + '\'' +
                 ", studentNative='" + studentNative + '\'' +
@@ -216,7 +179,6 @@ public class Student {
                 ", studentIdCard='" + studentIdCard + '\'' +
                 ", studentPhone='" + studentPhone + '\'' +
                 ", studentEmail='" + studentEmail + '\'' +
-                ", studentPolitical='" + studentPolitical + '\'' +
                 ", studentProfile='" + studentProfile + '\'' +
                 '}';
     }
@@ -228,18 +190,17 @@ public class Student {
         Student student = (Student) o;
         return Objects.equals(studentId, student.studentId) && Objects.equals(studentName, student.studentName) &&
                 Objects.equals(studentPassword, student.studentPassword) && Objects.equals(studentAge, student.studentAge) &&
-                Objects.equals(studentGender, student.studentGender) && Objects.equals(studentBirthDate, student.studentBirthDate) &&
-                Objects.equals(studentDepartment, student.studentDepartment) && Objects.equals(studentMajority, student.studentMajority) &&
-                Objects.equals(studentClass, student.studentClass) && Objects.equals(studentNative, student.studentNative) &&
-                Objects.equals(studentAddress, student.studentAddress) && Objects.equals(studentIdCard, student.studentIdCard) &&
-                Objects.equals(studentPhone, student.studentPhone) && Objects.equals(studentEmail, student.studentEmail) &&
-                Objects.equals(studentPolitical, student.studentPolitical) && Objects.equals(studentProfile, student.studentProfile);
+                Objects.equals(studentGender, student.studentGender) &&
+                Objects.equals(studentMajority, student.studentMajority) && Objects.equals(studentClass, student.studentClass) &&
+                Objects.equals(studentNative, student.studentNative) && Objects.equals(studentAddress, student.studentAddress) &&
+                Objects.equals(studentIdCard, student.studentIdCard) && Objects.equals(studentPhone, student.studentPhone) &&
+                Objects.equals(studentEmail, student.studentEmail) && Objects.equals(studentProfile, student.studentProfile);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(studentId, studentName, studentPassword, studentAge, studentGender, studentBirthDate,
-                studentDepartment, studentMajority, studentClass, studentNative, studentAddress, studentIdCard,
-                studentPhone, studentEmail, studentPolitical, studentProfile);
+        return Objects.hash(studentId, studentName, studentPassword, studentAge, studentGender,
+                studentMajority, studentClass, studentNative, studentAddress, studentIdCard,
+                studentPhone, studentEmail, studentProfile);
     }
 }

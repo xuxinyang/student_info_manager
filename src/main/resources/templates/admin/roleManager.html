@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="description" content="Restyling jQuery UI Widgets and Elements" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/ace-fonts.css" />
+    <link rel="stylesheet" href="../css/ace.min.css" id="main-ace-style" />
+    <script src="../js/ace-extra.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery.mobile.custom.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/ace-elements.min.js"></script>
+    <script src="../js/ace.min.js"></script>
+</head>
+
+<body class="no-skin">
+<!-- #section:basics/navbar.layout -->
+<div id="navbar" class="navbar navbar-default">
+
+    <div class="navbar-container" id="navbar-container">
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler">
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="navbar-header pull-left">
+            <!-- #section:basics/navbar.layout.brand -->
+            <a href="#" class="navbar-brand">
+                <small>
+                    <img src="../img/avatars/logo.png" alt="" />
+                </small>
+            </a>
+        </div>
+
+        <!-- #section:basics/navbar.dropdown -->
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+            <ul class="nav ace-nav">
+
+                <li class="green">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <i class="ace-icon fa fa-bell icon-animated-vertical"></i>
+                        <span class="badge badge-purple">7</span>
+                    </a>
+                </li>
+
+                <!-- #section:basics/navbar.user_menu -->
+                <li class="light-blue">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <img class="nav-user-photo" src="/img/avatars/user.jpg" alt="照片" />
+                        <span class="user-info">
+							欢迎您<br />
+							管理员
+						</span>
+                    </a>
+                </li>
+
+                <!-- /section:basics/navbar.user_menu -->
+            </ul>
+        </div>
+
+        <!-- /section:basics/navbar.dropdown -->
+    </div><!-- /.navbar-container -->
+</div>
+
+<!-- /section:basics/navbar.layout -->
+<div class="main-container" id="main-container">
+    <!-- #section:basics/sidebar -->
+    <div id="sidebar" class="sidebar responsive">
+        <ul class="nav nav-list">
+            <li class="">
+                <a href="/manager">
+                    <i class="menu-icon fa fa-delicious"></i>
+                    <span class="menu-text"> 评教系统 </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-user"></i>
+
+                    <span class="menu-text">
+								用户基本信息管理
+                        <!-- /section:basics/sidebar.layout.badge -->
+							</span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="">
+                        <a href="/studentAll">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            学生基本信息管理
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="/teacherAll">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            教师基本信息管理
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="/leaderAll">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            主管基本信息管理
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+            <li class="active">
+                <a href="/roleFindByWeight?weight=1">
+                    <i class="menu-icon fa fa-users"></i>
+                    <span class="menu-text"> 角色管理 </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+            <li class="">
+                <a href="/courseAll">
+                    <i class="menu-icon fa fa-pencil-square-o"></i>
+                    <span class="menu-text"> 课程管理 </span>
+                </a>
+                <b class="arrow"></b>
+            </li>
+            <li class="">
+                <a href="/admin">
+                    <i class="menu-icon fa fa-outdent"></i>
+                    <span class="menu-text"> 退出登陆 </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+        </ul><!-- /.nav-list -->
+        <!-- #section:basics/sidebar.layout.minimize -->
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+            <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        </div>
+
+    </div>
+
+    <!-- /section:basics/sidebar -->
+    <div class="main-content">
+
+        <div class="breadcrumbs" id="breadcrumbs">
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="#">评教系统</a>
+                </li>
+            </ul><!-- /.breadcrumb -->
+
+            <!-- #section:basics/content.searchbox -->
+            <div class="nav-search" id="nav-search" style="width: 40%">
+                <span>
+                <form class="form-search" action="/roleFindByWeight" method="post" style="float: left">
+                    <select name="weight"  class="nav-search-input">
+                        <option value="">---请选择用户权重---</option>
+                        <option value="1" checked="checked">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    <button class="btn btn-white btn-default btn-round btn-sm" type="submit">查找</button>
+                </form>
+                <form class="form-search" action="/roleFindByUserId" method="post" style="float: right">
+                    <input type="text" placeholder="请输入用户编号 ..." name="userId" class="nav-search-input"  autocomplete="on" />
+                    <button class="btn btn-white btn-default btn-round btn-sm" type="submit">
+                        查找
+                    </button>
+                </form>
+                </span>
+            </div><!-- /.nav-search -->
+        </div>
+        <div class="page-content">
+            <div class="page-content-area">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table id="sample-table-1" class="table table-striped table-bordered table-hover" style="text-align: center;">
+                                    <thead>
+                                    <tr>
+                                        <th class="center">序号</th>
+                                        <th class="center">用户编号</th>
+                                        <th class="center">用户姓名</th>
+                                        <th class="center">权重</th>
+                                        <th class="center">操作</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr th:each="role:${roles}"  th:if="${roles}!=null">
+                                        <td th:text="${role.id}"></td>
+                                        <td th:text="${role.userId}"></td>
+                                        <td th:text="${role.userName}"></td>
+                                        <td th:text="${role.weight}"></td>
+                                        <td>
+                                            <div class="hidden-sm hidden-xs btn-group">
+                                                <a role="button" class="green" data-toggle="modal" onclick="editInfo(this);" href="javascript:void(0)">
+                                                    <i class="ace-icon fa fa-pencil bigger-140"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="${role}!=null">
+                                        <td th:text="${role.id}"></td>
+                                        <td th:text="${role.userId}"></td>
+                                        <td th:text="${role.userName}"></td>
+                                        <td th:text="${role.weight}"></td>
+                                        <td>
+                                            <div class="hidden-sm hidden-xs btn-group">
+                                                <a role="button" class="green" data-toggle="modal" onclick="editInfo(this);" href="javascript:void(0)">
+                                                    <i class="ace-icon fa fa-pencil bigger-140"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div align="center">
+                                    <ul class="pagination">
+                                        <li class="disabled">
+                                            <a href="#">首页</a>
+                                        </li>
+                                        <li class="active">
+                                            <a href="#">上一页</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">下一页</a>
+                                        </li>
+                                        <li class="">
+                                            <a href="#">尾页</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div><!-- /.span -->
+                        </div><!-- /.row -->
+                        <div id="modal-table1" class="modal fade" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header no-padding">
+                                        <div class="table-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                <span class="white">&times;</span>
+                                            </button>
+                                            用户权重修改
+                                        </div>
+                                    </div>
+                                    <div class="modal-body no-padding">
+                                        <!-- PAGE CONTENT BEGINS -->
+                                        <!-- #section:elements.form -->
+                                        <div class="space-4"></div>
+                                        <table style="text-align: center">
+                                            <tbody>
+                                            <tr>
+                                                <td width="30%" style="text-align: right; margin-right: 15px;"><label>序号：</label></td>
+                                                <td width="30%"><input type="text" id="id" name="id" class="col-xs-10 col-sm-10"  th:readonly="readlonly"/></td>
+                                            </tr>
+                                            <tr style="height: 15px;"></tr>
+                                            <tr>
+                                                <td style="text-align: right; margin-right: 15px;"><label >用户编号（学生学号或职工编号）：</label></td>
+                                                <td><input type="text" id="userId" name="userId" class="col-xs-10 col-sm-10" th:readonly="readlonly"/></td>
+                                            </tr>
+                                            <tr style="height: 15px;"></tr>
+                                            <tr>
+                                                <td style="text-align: right; margin-right: 15px;"><label>用户姓名：</label></td>
+                                                <td><input type="text" id="userName" name="userName" class="col-xs-10 col-sm-10" th:readonly="readlonly"/></td>
+                                            </tr>
+                                            <tr style="height: 15px;"></tr>
+                                            <tr>
+                                                <td style="text-align: right; margin-right: 15px;"><label >用户权重：</label></td>
+                                                <td>
+                                                    <select class="form-control" name="weight" id="weight" style="width: 280px;">
+                                                        <option value="">---请选择用户权重---</option>
+                                                        <option value="1" th:selected="selected">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr style="height: 15px;">
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align: right; margin-right: 15px;"></td>
+                                                <td style="height: 100px">
+                                                    <button class="btn btn-info" type="submit" onclick="update()" href="javascript:void(0 )">
+                                                        <i class="ace-icon fa fa-check bigger-110"></i>
+                                                        修改
+                                                    </button>
+                                                    <button class="btn" style="margin-left: 20px;" data-dismiss="modal">
+                                                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                        关闭
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- PAGE CONTENT ENDS -->
+                    </div>
+                </div><!-- /.row -->
+            </div><!-- /.page-content-area -->
+        </div><!-- /.page-content -->
+
+    </div><!-- /.main-content -->
+
+    <div class="footer">
+        <div class="footer-inner">
+            <!-- #section:basics/footer -->
+            <div class="footer-content">
+				<span class="bigger-120">
+					版权所有&copy;<a href="http://www.xapi.edu.cn/" target="_blank">西京学院</a>
+				</span>
+            </div>
+
+            <!-- /section:basics/footer -->
+        </div>
+    </div>
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+<script type="text/javascript">
+    function editInfo(obj) {
+        var tds = $(obj).parent().parent().parent().find("td");
+        // alert(tds);
+        $('#id').val(tds.eq(0).text());
+        $('#userId').val(tds.eq(1).text());
+        $("#userName").val(tds.eq(2).text());
+        $("#weight").val(tds.eq(3).text());
+        $("#modal-table1").modal("show");
+    }
+    function update() {
+        // 获取模态框数据
+        var userId = $("#userId").val();
+        var weight = $("#weight").val();
+        var role = {
+            "userId": userId,
+            "weight": weight
+        };
+        $.ajax({
+            type: "post",
+            url: "/roleUpdate",
+            async: false,
+            cache: false,
+            data: JSON.stringify(role),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function(data) {
+                console.log(data);
+                alert("修改成功!");
+                location.reload();
+            },
+            error: function (result) {
+                console.log(result);
+                alert("修改失败!");
+                location.reload();
+            }
+        });
+        $("#modal-table1").modal("hide");
+    }
+</script>
+</body>
+</html>

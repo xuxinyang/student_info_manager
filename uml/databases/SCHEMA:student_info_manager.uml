@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>fe71ee13-4dd5-43a4-ba13-9101ba88077f.SCHEMA:student_info_manager</OriginalElement>
+  <nodes>
+    <node x="541.0000000000001" y="244.0">fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.major_info</node>
+    <node x="893.0" y="670.0">fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.course_info</node>
+    <node x="347.3750000000001" y="0.0">fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.department_info</node>
+    <node x="767.75" y="966.0">fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.grade_info</node>
+    <node x="174.00000000000006" y="140.0">fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.teacher_info</node>
+    <node x="498.00000000000006" y="514.0">fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.student_info</node>
+    <node x="0.0" y="657.0">fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.admin_info</node>
+    <node x="221.00000000000006" y="979.0">fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.role_info</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.teacher_info" target="fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.department_info">
+      <point x="0.0" y="-162.0" />
+      <point x="347.50000000000006" y="115.0" />
+      <point x="430.1250000000001" y="115.0" />
+      <point x="-82.75" y="45.0" />
+    </edge>
+    <edge source="fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.grade_info" target="fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.student_info">
+      <point x="-69.5" y="-71.0" />
+      <point x="837.25" y="941.0" />
+      <point x="779.2500000000001" y="941.0" />
+      <point x="93.75000000000006" y="201.0" />
+    </edge>
+    <edge source="fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.grade_info" target="fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.course_info">
+      <point x="69.5" y="-71.0" />
+      <point x="976.25" y="941.0" />
+      <point x="1041.5" y="941.0" />
+      <point x="0.0" y="45.0" />
+    </edge>
+    <edge source="fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.role_info" target="fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.admin_info">
+      <point x="-84.33333333333326" y="-58.0" />
+      <point x="263.1666666666668" y="941.0" />
+      <point x="168.5" y="941.0" />
+      <point x="0.0" y="58.0" />
+    </edge>
+    <edge source="fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.role_info" target="fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.teacher_info">
+      <point x="0.0" y="-58.0" />
+      <point x="0.0" y="162.0" />
+    </edge>
+    <edge source="fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.role_info" target="fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.student_info">
+      <point x="84.33333333333337" y="-58.0" />
+      <point x="431.8333333333334" y="941.0" />
+      <point x="591.75" y="941.0" />
+      <point x="-93.75" y="201.0" />
+    </edge>
+    <edge source="fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.major_info" target="fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.department_info">
+      <point x="5.6843418860808015E-14" y="-58.0" />
+      <point x="685.5000000000001" y="115.0" />
+      <point x="595.6250000000001" y="115.0" />
+      <point x="82.75" y="45.0" />
+    </edge>
+    <edge source="fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.student_info" target="fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.major_info">
+      <point x="5.6843418860808015E-14" y="-201.0" />
+      <point x="0.0" y="58.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.8342198581560284" x="652.5" y="554.0" />
+  <SelectedNodes>
+    <node>fe71ee13-4dd5-43a4-ba13-9101ba88077f.TABLE:student_info_manager.major_info</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+    <Category>Virtual foreign keys</Category>
+    <Category>Comments</Category>
+  </Categories>
+</Diagram>
+

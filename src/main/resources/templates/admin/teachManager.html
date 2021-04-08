@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title></title>
+		<meta name="description" content="Restyling jQuery UI Widgets and Elements" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../css/ace-fonts.css" />
+		<link rel="stylesheet" href="../css/ace.min.css" id="main-ace-style" />
+		<script src="../js/ace-extra.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/jquery.mobile.custom.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/ace-elements.min.js"></script>
+		<script src="../js/ace.min.js"></script>
+	</head>
+
+	<body class="no-skin">
+		<!-- #section:basics/navbar.layout -->
+		<div id="navbar" class="navbar navbar-default">
+
+			<div class="navbar-container" id="navbar-container">
+				<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler">
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+				</button>
+
+				<div class="navbar-header pull-left">
+					<!-- #section:basics/navbar.layout.brand -->
+					<a href="#" class="navbar-brand">
+						<small>
+							<img src="../img/avatars/logo.png" alt="" />
+						</small>
+					</a>
+				</div>
+
+				<!-- #section:basics/navbar.dropdown -->
+				<div class="navbar-buttons navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+
+						<li class="green">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="ace-icon fa fa-bell icon-animated-vertical"></i>
+								<span class="badge badge-purple">7</span>
+							</a>
+						</li>
+
+						<!-- #section:basics/navbar.user_menu -->
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<img class="nav-user-photo" src="/img/avatars/user.jpg" alt="照片" />
+								<span class="user-info">
+									欢迎您<br />
+									管理员
+								</span>
+							</a>
+						</li>
+
+						<!-- /section:basics/navbar.user_menu -->
+					</ul>
+				</div>
+
+				<!-- /section:basics/navbar.dropdown -->
+			</div><!-- /.navbar-container -->
+		</div>
+
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container" id="main-container">
+			<!-- #section:basics/sidebar -->
+			<div id="sidebar" class="sidebar responsive">
+				<ul class="nav nav-list">
+					<li class="">
+						<a href="manager.html">
+							<i class="menu-icon fa fa-delicious"></i>
+							<span class="menu-text"> 评教系统 </span>
+						</a>
+
+						<b class="arrow"></b>
+					</li>
+					<li class="active">
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-user"></i>
+
+							<span class="menu-text">
+								用户基本信息管理
+								<!-- /section:basics/sidebar.layout.badge -->
+							</span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+						<b class="arrow"></b>
+						<ul class="submenu">
+							<li class="">
+								<a href="/studentAll">
+									<i class="menu-icon fa fa-caret-right"></i>
+									学生基本信息管理
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="active">
+								<a href="/teacherAll">
+									<i class="menu-icon fa fa-caret-right"></i>
+									教师基本信息管理
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="/leaderAll">
+									<i class="menu-icon fa fa-caret-right"></i>
+									主管基本信息管理
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+					<li class="">
+						<a href="/roleFindByWeight?weight=1">
+							<i class="menu-icon fa fa-users"></i>
+							<span class="menu-text"> 角色管理 </span>
+						</a>
+
+						<b class="arrow"></b>
+					</li>
+					<li class="">
+						<a href="/courseAll">
+							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<span class="menu-text"> 课程管理 </span>
+						</a>
+
+						<b class="arrow"></b>
+					</li>
+					<li class="">
+						<a href="/admin">
+							<i class="menu-icon fa fa-outdent"></i>
+							<span class="menu-text"> 退出登陆 </span>
+						</a>
+
+						<b class="arrow"></b>
+					</li>
+				</ul><!-- /.nav-list -->
+				<!-- #section:basics/sidebar.layout.minimize -->
+				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+				</div>
+
+			</div>
+
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				
+				<div class="breadcrumbs" id="breadcrumbs">
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon"></i>
+							<a href="#">评教系统</a>
+						</li>
+					</ul><!-- /.breadcrumb -->
+
+					<!-- #section:basics/content.searchbox -->
+					<div class="nav-search" id="nav-search">
+						<form class="form-search">
+							<span class="input-icon">
+								<input type="text" placeholder="请输入教师编号 ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+								<i class="ace-icon fa fa-search nav-search-icon"></i>
+								<button class="btn btn-white btn-default btn-round btn-sm" type="submit">查找</button>
+								<a href="#modal-table2" role="button" class="blue" data-toggle="modal">
+									<button class="btn btn-white btn-pink btn-round btn-sm">
+										<i class="ace-icon fa fa-plus red"></i>
+										新增
+									</button>
+								</a>
+							</span>
+						</form>
+					</div><!-- /.nav-search -->
+				</div>
+				<div class="page-content">
+					
+					<div class="page-content-area">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="row">
+									<div class="col-xs-12">
+										<table id="sample-table-1" class="table table-striped table-bordered table-hover" style="text-align: center;">
+											<thead>
+												<tr>
+													<th class="center">编号</th>
+													<th class="center">姓名</th>
+													<th class="center">院系</th>
+													<th class="center">职位</th>
+													<th class="center">电话</th>
+													<th class="center">邮箱</th>
+													<th class="center">操作</th>
+												</tr>
+											</thead>
+
+											<tbody>
+												<tr th:each="teacher:${teachers}">
+													<td th:text="${teacher.id}"></td>
+													<td th:text="${teacher.name}"></td>
+													<td th:text="${teacher.department}"></td>
+													<td th:text="${teacher.position}"></td>
+													<td th:text="${teacher.telephone}"></td>
+													<td th:text="${teacher.email}"></td>
+													<td>
+														<div class="hidden-sm hidden-xs btn-group">
+															<a role="button" class="green" data-toggle="modal" onclick="editInfo(this);" href="javascript:void(0)">
+																<i class="ace-icon fa fa-pencil bigger-140"></i>
+															</a>
+															&nbsp;&nbsp;&nbsp;
+															<a th:href="@{/teacherDelete?id=}+${teacher.id}" role="button" class="red"  data-toggle="modal">
+																<i class="ace-icon fa fa-trash-o bigger-140"></i>
+															</a>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<div align="center">
+											<ul class="pagination">
+												<li class="disabled">
+													<a href="#">首页</a>
+												</li>
+												<li class="active">
+													<a href="#">上一页</a>
+												</li>
+												<li>
+													<a href="#">下一页</a>
+												</li>
+												<li class="">
+													<a href="#">尾页</a>
+												</li>
+											</ul>
+										</div>
+									</div><!-- /.span -->
+								</div><!-- /.row -->
+								<div id="modal-table1" class="modal fade" tabindex="-1">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header no-padding">
+												<div class="table-header">
+													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+														<span class="white">&times;</span>
+													</button>
+													教师信息修改
+												</div>
+											</div>
+											<div class="modal-body no-padding">
+												<!-- PAGE CONTENT BEGINS -->
+												<!-- #section:elements.form -->
+												<div class="space-4"></div>
+												<form id="updateForm" class="form-horizontal" role="form" action="# #" method="post">
+													<table style="text-align: center">
+														<tbody>
+														<tr>
+															<td width="10%"><label>编号：</label></td>
+															<td width="30%"><input type="text" id="teachId" name="id" class="col-xs-10 col-sm-10"  th:readonly="readlonly"/></td>
+														</tr>
+														<tr style="height: 15px;"></tr>
+														<tr>
+															<td><label>姓名：</label></td>
+															<td><input type="text" id="teachName" name="name" class="col-xs-10 col-sm-10" th:required="required"/></td>
+														</tr>
+														<tr style="height: 15px;"></tr>
+														<tr>
+															<td><label >密码：</label></td>
+															<td><input type="password" id="teachPassword" name="password" class="col-xs-10 col-sm-10" minlength="6" th:required="required"/></td>
+														</tr>
+														<tr style="height: 15px;"></tr>
+														<tr>
+															<td><label>学院：</label></td>
+															<td><input type="text" id="teachDepartment" name="department" class="col-xs-10 col-sm-10" th:required="required" /></td>
+														</tr>
+														<tr style="height: 15px;"></tr>
+														<tr>
+															<td><label>职位：</label></td>
+															<td><input type="text" id="teachPosition" name="position" class="col-xs-10 col-sm-10" th:required="required" /></td>
+														</tr>
+														<tr style="height: 15px;"></tr>
+														<tr>
+															<td><label>电话：</label></td>
+															<td><input type="tel" id="teachTel" name="telephone" class="col-xs-10 col-sm-10" th:required="required" /></td>
+														</tr>
+														<tr style="height: 15px;"></tr>
+														<tr>
+															<td><label>邮箱：</label></td>
+															<td><input type="text" id="teachEmail" name="email" class="col-xs-10 col-sm-10" th:required="required" /></td>
+														</tr>
+														<tr style="height: 15px;">
+														</tr>
+														<tr>
+															<td></td>
+															<td style="height: 100px">
+																<button class="btn btn-info" type="button" onclick="update()" href="javascript:void(0);">
+																	<i class="ace-icon fa fa-check bigger-110"></i>
+																	修改
+																</button>
+																<button class="btn" style="margin-left: 20px;" data-dismiss="modal">
+																	<i class="ace-icon fa fa-undo bigger-110"></i>
+																	关闭
+																</button>
+															</td>
+														</tr>
+														</tbody>
+													</table>
+												</form>
+											</div>
+										</div><!-- /.modal-content -->
+									</div><!-- /.modal-dialog -->
+								</div><!-- PAGE CONTENT ENDS -->
+								<div id="modal-table2" class="modal fade" tabindex="-1">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header no-padding">
+												<div class="table-header">
+													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+														<span class="white">&times;</span>
+													</button>
+													新增教师
+												</div>
+											</div>
+
+											<div class="modal-body no-padding">
+												<!-- PAGE CONTENT BEGINS -->
+												<form class="form-horizontal" role="form" th:action="@{/teacherAdd}" th:method="post">
+													<!-- #section:elements.form -->
+													<div class="space-4"></div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right" for="form-field-1">编号：</label>
+
+														<div class="col-sm-9">
+															<input type="text" th:name="id" placeholder="请输入教师编号" th:required="required" class="col-xs-10 col-sm-10"/>
+														</div>
+													</div>
+													<div class="space-4"></div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right">密码：</label>
+
+														<div class="col-sm-9">
+															<input type="password"  th:name="password" th:required="required" minlength="6" placeholder="请输入密码" class=" col-xs-10 col-sm-10" />
+														</div>
+													</div>
+
+													<!-- /section:elements.form -->
+													<div class="space-4"></div>
+
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right" for="form-field-2">姓名：</label>
+														<div class="col-sm-9">
+															<input type="text" id="form-field-2" th:name="name" th:required="required" placeholder="教师名字" class="col-xs-10 col-sm-10" />
+														</div>
+													</div>
+
+													<div class="space-4"></div>
+
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right" for="form-field-1">学院：</label>
+														<div class="col-sm-2">
+															<div class="pos-rel">
+																<select class="form-control" th:name="department" style="width: 368px;">
+																	<option value="">请选择学院</option>
+																	<option value="计算机学院">计算机学院</option>
+																	<option value="石油工程学院">石油工程学院</option>
+																	<option value="化学化工学院">化学化工学院</option>
+																	<option value="机械工程学院">机械工程学院</option>
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class="space-4"></div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right" for="form-field-1" >职位：</label>
+														<div class="col-sm-2">
+															<div class="pos-rel">
+																<select class="form-control" id="form-field-select-1" th:name="position" style="width: 368px;" >
+																	<option value="">请选择职位</option>
+																	<option value="教授">教授</option>
+																	<option value="副教授">副教授</option>
+																	<option value="讲师">讲师</option>
+																	<option value="助教">助教</option>
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class="space-4"></div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right" for="form-field-1">电话：</label>
+
+														<div class="col-sm-9">
+															<input type="tel" th:name="telephone" th:required="required" placeholder="如xxx-xxxx-xxxx" class="col-xs-10 col-sm-10"  />
+														</div>
+													</div>
+													<div class="space-4"></div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right" for="form-field-1">邮箱：</label>
+
+														<div class="col-sm-9">
+															<input type="email" id="form-field-1" th:name="email" class="col-xs-10 col-sm-10" placeholder="XXXX@xsyu.edu.cn" th:required="required"/>
+														</div>
+													</div>
+													<div class="space-4"></div>
+													<div class="clearfix form-actions">
+														<div class="col-md-offset-3 col-md-9">
+															<button class="btn btn-info" type="submit">
+																<i class="ace-icon fa fa-check bigger-110"></i>
+																立即提交
+															</button>
+
+															&nbsp; &nbsp; &nbsp;
+															<button class="btn" type="reset">
+																<i class="ace-icon fa fa-undo bigger-110"></i>
+																重置
+															</button>
+														</div>
+													</div><!-- /.row -->
+												</form>
+											</div>
+										</div><!-- /.modal-content -->
+									</div><!-- /.modal-dialog -->
+								</div><!-- PAGE CONTENT ENDS -->
+							</div>
+						</div><!-- /.row -->
+					</div><!-- /.page-content-area -->
+				</div><!-- /.page-content -->
+
+			</div><!-- /.main-content -->
+
+			<div class="footer">
+				<div class="footer-inner">
+					<!-- #section:basics/footer -->
+					<div class="footer-content">
+						<span class="bigger-120">
+							版权所有&copy;<a href="http://www.xapi.edu.cn/" target="_blank">西京学院</a>
+						</span>
+					</div>
+
+					<!-- /section:basics/footer -->
+				</div>
+			</div>
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<script type="text/javascript">
+            function editInfo(obj) {
+                var tds = $(obj).parent().parent().parent().find("td");
+                // alert(tds);
+                $('#teachId').val(tds.eq(0).text());
+                $('#teachName').val(tds.eq(1).text());
+                $("#teachDepartment").val(tds.eq(2).text());
+                $("#teachPosition").val(tds.eq(3).text());
+                $("#teachTel").val(tds.eq(4).text());
+                $("#teachEmail").val(tds.eq(5).text());
+                $("#modal-table1").modal("show");
+            }
+            function update() {
+                // 获取模态框数据
+                var teachId = $("#teachId").val();
+                var teachName = $("#teachName").val();
+                var teachPassword = $("#teachPassword").val();
+                var teachDepartment = $("#teachDepartment").val();
+                var teachPosition = $("#teachPosition").val();
+                var teachTelephone = $("#teachTel").val();
+                var teachEmail = $("#teachEmail").val();
+
+                var teacher = {
+                    "id": teachId,
+                    "name": teachName,
+                    "password": teachPassword,
+					"department": teachDepartment,
+                    "position": teachPosition,
+                    "telephone": teachTelephone,
+                    "email": teachEmail
+                };
+                $.ajax({
+                    type: "post",
+                    url: "/teacherUpdate",
+                    async: true,
+                    cache: false,
+                    data: JSON.stringify(teacher),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function(data) {
+                        console.log(data);
+                        alert("修改成功!");
+                        location.reload();
+                    },
+                    error: function (data) {
+                        console.log(data);
+                        alert("修改失败!");
+                    }
+                });
+                $("#modal-table1").modal("hide");
+            }
+		</script>
+	</body>
+</html>

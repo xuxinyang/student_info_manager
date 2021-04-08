@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface DepartmentRepository extends JpaRepository<Department, Serializable> {
     public List<Department> findByDepartmentId(Integer departmentId);
+
     public List<Department> findByDepartmentName(String departmentName);
 }
