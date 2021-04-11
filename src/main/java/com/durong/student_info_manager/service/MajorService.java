@@ -45,4 +45,8 @@ public class MajorService {
         return new ArrayList<Major>(majorRepository.findByDepartmentId(departmentId));
     }
 
+    public Major findById(Integer majorId) {
+        return majorRepository.findById(majorId).orElse(null);
+    }
+
 }

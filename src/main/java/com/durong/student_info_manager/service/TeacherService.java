@@ -55,7 +55,7 @@ public class TeacherService {
         teacherRepository.save(teacher);
     }
 
-    public void stuUpdate(String teacherId, String password) {
+    public void teachUpdate(String teacherId, String password) {
         Teacher teacher = teacherRepository.findById(teacherId).orElse(null);
         if (teacher != null) {
             teacher.setTeacherPassword(password);

@@ -42,7 +42,6 @@ public class LoginController {
         } else {
             System.out.println(adminId);
             System.out.println(admin);
-//                if (shaEncrypt.validatePwd(password, admin.getAdminPassword())) {
             if (admin.getAdminPassword().equals(adminPassword)) {
                 model.addAttribute("admin", admin);
                 return "admin/main";
@@ -68,8 +67,7 @@ public class LoginController {
         } else {
             if(roleService.findById(roleId).getRoleWeight() == 1) {
                 Student student = studentService.findById(roleId);
-//                if (shaEncrypt.validatePwd(password, student.getStudentPassword())) {
-                if (student.getStudentPassword().equals(password)) {
+                if (shaEncrypt.validatePwd(password, student.getStudentPassword())) {
                     model.addAttribute("student", student);
                     return "student/stuIndex";
                 } else {
@@ -78,7 +76,8 @@ public class LoginController {
             }
             else if (roleService.findById(roleId).getRoleWeight() == 2) {
                 Teacher teacher = teacherService.findById(roleId);
-                if (shaEncrypt.validatePwd(password, teacher.getTeacherPassword())) {
+//                if (shaEncrypt.validatePwd(password, teacher.getTeacherPassword())) {
+                if (teacher.getTeacherPassword().equals(password)) {
                     model.addAttribute("teacher", teacher);
                     return "teacher/teachIndex";
                 } else {

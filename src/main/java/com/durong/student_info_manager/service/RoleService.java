@@ -27,7 +27,6 @@ public class RoleService {
         role.setRoleWeight(roleWeight);
         roleRepository.save(role);
     }
-    // 不给角色删除权限
     public void delete(String roleId) {
         roleRepository.deleteByRoleId(roleId);
     }

@@ -20,30 +20,29 @@ public class RecordController {
     @RequestMapping(value = "/recordAll", method = {RequestMethod.GET, RequestMethod.POST})
     public String recordAll(Model model) {
         List<Record> records = recordService.findAll();
-        System.out.println(records.size());
         model.addAttribute("records", records);
-        return "admin/stuManager";
+        return "admin/courseManager";
     }
-    // 管理员通过ID查询某一个学生
-    @RequestMapping(value = "/recordFindByIdFromAdmin", method = {RequestMethod.GET, RequestMethod.POST})
-    public String recordFindByIdFromAdmin(Model model, String recordId) {
-        Record record = recordService.findById(recordId);
-        model.addAttribute("record", record);
-        return "admin/stuManager";
+    // 管理员通过courseId查询选这个课程的所有学生
+    @RequestMapping(value = "/recordFindByCourseId", method = {RequestMethod.GET, RequestMethod.POST})
+    public String recordFindByIdFromAdmin(Model model, Integer courseId) {
+        List<Record> records = recordService.findAllByCourseId(courseId);
+        model.addAttribute("records", records);
+        return "admin/courseManager";
     }
-    // 学生端查看自己信息
+    // 管理员通过studentId查询该学生选择了哪些课程
     @RequestMapping(value = "/recordFindByIdFromRecord", method = {RequestMethod.GET, RequestMethod.POST})
-    public String recordFindByIdFromRecord(Model model, String recordId) {
-        Record record = recordService.findById(recordId);
-        model.addAttribute("record", record);
-        return "record/stuInfo";
-    }
-    // 通过班级和专业进行查询
-    @RequestMapping(value = "/recordFindByClassAndMajority", method = {RequestMethod.GET, RequestMethod.POST})
-    public String recordFindByClassAndMajority(Model model, String recordClass, Integer recordMajority) {
-        List<Record> records = recordService.findAllRecordsOfClassAndMajority(recordClass, recordMajority);
+    public String recordFindByIdFromRecord(Model model, String studentId) {
+        List<Record> records = recordService.findAllByStudentId(studentId);
         model.addAttribute("records", records);
-        return "admin/stuManager";
+        return "admin/courseManager";
+    }
+    // 通过课程和学生编号进行查询
+    @RequestMapping(value = "/recordFindByClassAndMajority", method = {RequestMethod.GET, RequestMethod.POST})
+    public String recordFindByClassAndMajority(Model model, Integer courseId, String studentId) {
+        Record record = recordService.findByCourseIdAndStudentId(courseId, studentId);
+        model.addAttribute("record", record);
+        return "admin/courseManager";
     }
     // 查询操作 <-- end -->
 }

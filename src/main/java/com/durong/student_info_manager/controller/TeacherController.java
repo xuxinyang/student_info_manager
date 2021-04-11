@@ -1,6 +1,8 @@
 package com.durong.student_info_manager.controller;
 
+import com.durong.student_info_manager.domain.Department;
 import com.durong.student_info_manager.domain.Teacher;
+import com.durong.student_info_manager.service.DepartmentService;
 import com.durong.student_info_manager.service.RoleService;
 import com.durong.student_info_manager.service.TeacherService;
 import com.durong.student_info_manager.util.SHAEncrypt;
@@ -18,6 +20,9 @@ import java.util.List;
 public class TeacherController {
     @Autowired
     TeacherService teacherService;
+
+    @Autowired
+    DepartmentService departmentService;
 
     @Autowired
     RoleService roleService;
@@ -56,12 +61,19 @@ public class TeacherController {
     }
     // 只更新密码
     @RequestMapping(value = "/teacherUpdatePwd", method = {RequestMethod.GET, RequestMethod.POST})
-    public String teacherUpdate1(Model model, String teacherId, String teacherPassword) {
-        String encodePwd = shaEncrypt.encryptPwd(teacherPassword);
-        teacherService.stuUpdate(teacherId, teacherPassword);
+    public String teacherUpdatePwd(Model model, String teacherId) {
         Teacher teacher = teacherService.findById(teacherId);
         model.addAttribute("teacher", teacher);
-        return "teacher/teachInfo";
+        return "teacher/teachPwdModify";
+    }
+
+    @RequestMapping(value = "/teacherUpdatePwdOp", method = {RequestMethod.GET, RequestMethod.POST})
+    public String teacherUpdatePwdOp(Model model, String teacherId, String password) {
+        String encodePwd = shaEncrypt.encryptPwd(password);
+        teacherService.teachUpdate(teacherId, encodePwd);
+        Teacher teacher = teacherService.findById(teacherId);
+        model.addAttribute("teacher", teacher);
+        return "common/login";
     }
     // 更新操作 <-- end -->
 
@@ -96,7 +108,9 @@ public class TeacherController {
     @RequestMapping(value = "/teacherFindByIdFromTeacher", method = {RequestMethod.GET, RequestMethod.POST})
     public String teacherFindByIdFromTeacher(Model model, String teacherId) {
         Teacher teacher = teacherService.findById(teacherId);
+        Department department = departmentService.findById(teacher.getTeacherDepartment());
         model.addAttribute("teacher", teacher);
+        model.addAttribute("department", department);
         return "teacher/teachInfo";
     }
     // 通过学院进行查询

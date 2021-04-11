@@ -118,7 +118,6 @@
                     <i class="menu-icon fa fa-pencil-square-o"></i>
                     <span class="menu-text"> 课程管理 </span>
                 </a>
-
                 <b class="arrow"></b>
             </li>
             <li class="">
@@ -209,7 +208,7 @@
                                                         <i class="ace-icon fa fa-pencil bigger-140"></i>
                                                     </a>
                                                     &nbsp;&nbsp;&nbsp;
-                                                    <a th:href="@{/studentDelete?id=}+${student.studentId}"
+                                                    <a th:href="@{/studentDeleteById?studentId=}+${student.studentId}"
                                                        role="button" class="red" data-toggle="modal">
                                                         <i class="ace-icon fa fa-trash-o bigger-140"></i>
                                                     </a>

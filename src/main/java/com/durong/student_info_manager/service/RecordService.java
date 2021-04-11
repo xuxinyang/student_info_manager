@@ -3,10 +3,12 @@ package com.durong.student_info_manager.service;
 import com.durong.student_info_manager.domain.Record;
 import com.durong.student_info_manager.repository.RecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class RecordService {
     @Autowired
     RecordRepository recordRepository;
@@ -29,5 +31,9 @@ public class RecordService {
 
     public List<Record> findAllByStudentId(String studentId) {
         return new ArrayList<Record>(recordRepository.findByStudentId(studentId));
+    }
+
+    public List<Record> findAll() {
+        return new ArrayList<Record>(recordRepository.findAll());
     }
 }

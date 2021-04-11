@@ -44,4 +44,8 @@ public class GradeService {
     public List<Grade> findAllByCourseId(Integer courseId) {
         return new ArrayList<Grade>(gradeRepository.findByCourseId(courseId));
     }
+
+    public List<Grade> findAllByStudentId(String studentId) {
+        return new ArrayList<Grade>(gradeRepository.findByStudentId(studentId));
+    }
 }

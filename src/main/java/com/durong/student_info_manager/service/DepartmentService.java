@@ -2,11 +2,13 @@ package com.durong.student_info_manager.service;
 
 import com.durong.student_info_manager.domain.Department;
 import com.durong.student_info_manager.repository.DepartmentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DepartmentService {
 
+    @Autowired
     DepartmentRepository departmentRepository;
 
     public void update(Integer departmentId, String departmentName) {

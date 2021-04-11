@@ -1,6 +1,8 @@
 package com.durong.student_info_manager.controller;
 
+import com.durong.student_info_manager.domain.Major;
 import com.durong.student_info_manager.domain.Student;
+import com.durong.student_info_manager.service.MajorService;
 import com.durong.student_info_manager.service.RoleService;
 import com.durong.student_info_manager.service.StudentService;
 import com.durong.student_info_manager.util.SHAEncrypt;
@@ -19,7 +21,8 @@ public class StudentController {
 
     @Autowired
     StudentService studentService;
-
+    @Autowired
+    MajorService majorService;
     @Autowired
     RoleService roleService;
     SHAEncrypt shaEncrypt = new SHAEncrypt();
@@ -56,14 +59,22 @@ public class StudentController {
                 student.getStudentIdCard(), student.getStudentPhone(), student.getStudentEmail(), null);
         return studentService.findAll();
     }
+
     // 只更新密码
     @RequestMapping(value = "/studentUpdatePwd", method = {RequestMethod.GET, RequestMethod.POST})
-    public String studentUpdate1(Model model, String studentId, String studentPassword) {
-        String encodePwd = shaEncrypt.encryptPwd(studentPassword);
-        studentService.stuUpdate(studentId, studentPassword);
+    public String studentUpdatePwd(Model model, String studentId) {
         Student student = studentService.findById(studentId);
         model.addAttribute("student", student);
-        return "student/stuInfo";
+        return "student/stuUpdatePwd";
+    }
+
+    @RequestMapping(value = "/studentUpdatePwdOp", method = {RequestMethod.GET, RequestMethod.POST})
+    public String studentUpdatePwdOp(Model model, String studentId, String studentPassword) {
+        String encodePwd = shaEncrypt.encryptPwd(studentPassword);
+        studentService.stuUpdate(studentId, encodePwd);
+        Student student = studentService.findById(studentId);
+        model.addAttribute("student", student);
+        return "common/login";
     }
     // 更新操作 <-- end -->
 
@@ -77,6 +88,7 @@ public class StudentController {
         model.addAttribute("students", students);
         return "admin/stuManager";
     }
+
     // 删除操作 <-- end -->
     // 查询操作 <-- start -->
     // 查询全部
@@ -87,20 +99,27 @@ public class StudentController {
         model.addAttribute("students", students);
         return "admin/stuManager";
     }
+
     // 管理员通过ID查询某一个学生
     @RequestMapping(value = "/studentFindByIdFromAdmin", method = {RequestMethod.GET, RequestMethod.POST})
     public String studentFindByIdFromAdmin(Model model, String studentId) {
         Student student = studentService.findById(studentId);
+        Major major = majorService.findById(student.getStudentMajority());
         model.addAttribute("student", student);
+        model.addAttribute("major", major);
         return "admin/stuManager";
     }
+
     // 学生端查看自己信息
     @RequestMapping(value = "/studentFindByIdFromStudent", method = {RequestMethod.GET, RequestMethod.POST})
     public String studentFindByIdFromStudent(Model model, String studentId) {
         Student student = studentService.findById(studentId);
+        Major major = majorService.findById(student.getStudentMajority());
         model.addAttribute("student", student);
+        model.addAttribute("major", major);
         return "student/stuInfo";
     }
+
     // 通过班级和专业进行查询
     @RequestMapping(value = "/studentFindByClassAndMajority", method = {RequestMethod.GET, RequestMethod.POST})
     public String studentFindByClassAndMajority(Model model, String studentClass, Integer studentMajority) {
