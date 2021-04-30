@@ -26,22 +26,17 @@ public class LoginController {
     @Autowired
     RoleService roleService;
     SHAEncrypt shaEncrypt = new SHAEncrypt();
-
     // Admin Login Control
     @RequestMapping(value = "/adminLogin", method = {RequestMethod.GET, RequestMethod.POST})
     public String adminLogin() {
         return "admin/login";
     }
-
     @RequestMapping(value = "/adminLoginControl", method = {RequestMethod.GET, RequestMethod.POST})
     public String adminLoginControl(Model model, String adminId, String adminPassword) {
         Admin admin = adminService.findById(adminId);
-        if (admin == null)
-        {
+        if (admin == null) {
             return "admin/login";
         } else {
-            System.out.println(adminId);
-            System.out.println(admin);
             if (admin.getAdminPassword().equals(adminPassword)) {
                 model.addAttribute("admin", admin);
                 return "admin/main";
@@ -49,18 +44,14 @@ public class LoginController {
                 return "admin/login";
             }
         }
-
     }
     // User Login Control
     @RequestMapping(value = "/userLogin", method = {RequestMethod.GET, RequestMethod.POST})
     public String userLogin() {
         return "common/login";
     }
-
-
     @RequestMapping(value = "/userLoginControl", method = {RequestMethod.GET, RequestMethod.POST})
     public String userLoginControl(Model model, String roleId, String password) {
-
         System.out.println(roleId);
         if(roleService.findById(roleId) == null) {
             return "common/login";
@@ -88,5 +79,4 @@ public class LoginController {
             }
         }
     }
-
 }

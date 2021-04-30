@@ -76,8 +76,6 @@ public class TeacherService {
     }
 
     public List<Teacher> findAll() {
-        List<Teacher> teachers = new ArrayList<Teacher>();
-        teacherRepository.findAll().addAll(teachers);
-        return teachers;
+        return new ArrayList<Teacher>(teacherRepository.findAll());
     }
 }

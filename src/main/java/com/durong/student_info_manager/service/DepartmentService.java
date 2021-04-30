@@ -5,6 +5,8 @@ import com.durong.student_info_manager.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DepartmentService {
 
@@ -22,4 +24,8 @@ public class DepartmentService {
     public Department findById(Integer departmentId) {
         return departmentRepository.findById(departmentId).orElse(null);
     }
-}
+
+    public List<Department> findAll() {
+        return departmentRepository.findAll();
+    }
+ }

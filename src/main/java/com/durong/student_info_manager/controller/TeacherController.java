@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -93,8 +94,13 @@ public class TeacherController {
     @RequestMapping(value = "/teacherAll", method = {RequestMethod.GET, RequestMethod.POST})
     public String teacherAll(Model model) {
         List<Teacher> teachers = teacherService.findAll();
-        System.out.println(teachers.size());
+        List<Department> departments = new ArrayList<Department>();
         model.addAttribute("teachers", teachers);
+        for (Teacher teacher : teachers) {
+            Department department = departmentService.findById(teacher.getTeacherDepartment());
+            departments.add(department);
+        }
+        model.addAttribute("departments", departments);
         return "admin/teachManager";
     }
     // 管理员通过ID查询某一个教师

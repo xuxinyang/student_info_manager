@@ -2,28 +2,31 @@ package com.durong.student_info_manager.service;
 
 import com.durong.student_info_manager.domain.Course;
 import com.durong.student_info_manager.repository.CourseRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CourseService {
+    @Autowired
     CourseRepository courseRepository;
 
-    public void create(Integer courseId, String courseName, String courseStatus) {
+    public void create(Integer courseId, String courseName, String courseStatus, String teacherId) {
         Course course = new Course();
         course.setCourseId(courseId);
         course.setCourseName(courseName);
         course.setCourseStatus(courseStatus);
+        course.setTeacherId(teacherId);
         courseRepository.save(course);
     }
 
-    public void update(Integer courseId, String courseName, String courseStatus) {
+    public void update(Integer courseId, String courseName, String courseStatus, String teacherId) {
         Course course = courseRepository.findById(courseId).orElse(null);
         if (course != null) {
             course.setCourseName(courseName);
             course.setCourseStatus(courseStatus);
+            course.setTeacherId(teacherId);
             courseRepository.save(course);
         }
     }
@@ -38,13 +41,16 @@ public class CourseService {
     }
 
     public List<Course> findAll() {
-        List<Course> courses = new ArrayList<Course>();
-        courseRepository.findAll().addAll(courses);
-        return courses;
+        return courseRepository.findAll();
     }
 
     public List<Course> findAllCourseByStatus(String courseStatus)
     {
-        return new ArrayList<Course>(courseRepository.findByCourseStatus(courseStatus));
+        return courseRepository.findByCourseStatus(courseStatus);
+    }
+
+    public List<Course> findAllCourseByTeacherId(String teacherId)
+    {
+        return  courseRepository.findByTeacherId(teacherId);
     }
 }

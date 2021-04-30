@@ -12,7 +12,7 @@ import java.util.List;
 public class GradeService {
     @Autowired
     GradeRepository gradeRepository;
-
+    // 新增
     public void create(Float gradeScore, Integer courseId, String studentId) {
         Grade grade = new Grade();
         grade.setGradeScore(gradeScore);
@@ -20,7 +20,7 @@ public class GradeService {
         grade.setStudentId(studentId);
         gradeRepository.save(grade);
     }
-
+    // 更新
     public void update(Float gradeScore, Integer courseId, String studentId) {
         Grade grade = gradeRepository.findById(studentId).orElse(null);
         if (grade != null) {
@@ -30,21 +30,21 @@ public class GradeService {
         }
 
     }
-
+    // 删除
     public void delete(String studentId) {
         gradeRepository.deleteById(studentId);
     }
-
+    // 查找
     public List<Grade> findAll() {
         List<Grade> grades = new ArrayList<Grade>();
         gradeRepository.findAll().addAll(grades);
         return grades;
     }
-
+    // 通过课程ID进行查找
     public List<Grade> findAllByCourseId(Integer courseId) {
         return new ArrayList<Grade>(gradeRepository.findByCourseId(courseId));
     }
-
+    // 通过学生ID进行查找
     public List<Grade> findAllByStudentId(String studentId) {
         return new ArrayList<Grade>(gradeRepository.findByStudentId(studentId));
     }

@@ -10,4 +10,6 @@ public interface CourseRepository extends JpaRepository<Course, Serializable> {
 
     public List<Course> findByCourseStatus(String courseStatus);
 
+    public List<Course> findByTeacherId(String teacherId);
+
 }

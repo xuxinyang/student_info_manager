@@ -35,7 +35,7 @@
 					<!-- #section:basics/navbar.layout.brand -->
 					<a href="#" class="navbar-brand">
 						<small>
-							<img src="img/avatars/logo.png" alt="" />
+							<img src="img/avatars/sc_logo.png" alt="" />
 						</small>
 					</a>
 				</div>
@@ -54,7 +54,7 @@
 						<!-- #section:basics/navbar.user_menu -->
 						<li class="light-blue">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-								<img class="nav-user-photo" src="/img/avatars/user.jpg" alt="照片" />
+								<img class="nav-user-photo" src="img/avatars/user.jpg" alt="照片" />
 								<span class="user-info">
 									欢迎您<br />
 									管理员
@@ -180,29 +180,30 @@
 												<tr>
 													<th class="center">编号</th>
 													<th class="center">姓名</th>
-													<th class="center">院系</th>
-													<th class="center">职位</th>
-													<th class="center">电话</th>
-													<th class="center">邮箱</th>
+													<th class="center">性别</th>
+													<th class="center">所属学院</th>
+													<th class="center">家庭住址</th>
+													<th class="center">联系方式</th>
 													<th class="center">操作</th>
 												</tr>
 											</thead>
 
 											<tbody>
+
 												<tr th:each="teacher:${teachers}">
-													<td th:text="${teacher.id}"></td>
-													<td th:text="${teacher.name}"></td>
-													<td th:text="${teacher.department}"></td>
-													<td th:text="${teacher.position}"></td>
-													<td th:text="${teacher.telephone}"></td>
-													<td th:text="${teacher.email}"></td>
+													<td th:text="${teacher.teacherId}"></td>
+													<td th:text="${teacher.teacherName}"></td>
+													<td th:text="${teacher.teacherGender}"></td>
+													<td th:text="${teacher.teacherDepartment}==${department.departmentId}"></td>
+													<td th:text="${teacher.teacherAddress}"></td>
+													<td th:text="${teacher.teacherPhone}"></td>
 													<td>
 														<div class="hidden-sm hidden-xs btn-group">
 															<a role="button" class="green" data-toggle="modal" onclick="editInfo(this);" href="javascript:void(0)">
 																<i class="ace-icon fa fa-pencil bigger-140"></i>
 															</a>
 															&nbsp;&nbsp;&nbsp;
-															<a th:href="@{/teacherDelete?id=}+${teacher.id}" role="button" class="red"  data-toggle="modal">
+															<a th:href="@{/teacherDeleteById?teacherId=}+${teacher.teacherId}" role="button" class="red"  data-toggle="modal">
 																<i class="ace-icon fa fa-trash-o bigger-140"></i>
 															</a>
 														</div>
@@ -248,37 +249,52 @@
 														<tbody>
 														<tr>
 															<td width="10%"><label>编号：</label></td>
-															<td width="30%"><input type="text" id="teachId" name="id" class="col-xs-10 col-sm-10"  th:readonly="readlonly"/></td>
+															<td width="30%"><input type="text" id="teacherId" name="teacherId" class="col-xs-10 col-sm-10"  th:readonly="readlonly"/></td>
 														</tr>
 														<tr style="height: 15px;"></tr>
 														<tr>
 															<td><label>姓名：</label></td>
-															<td><input type="text" id="teachName" name="name" class="col-xs-10 col-sm-10" th:required="required"/></td>
+															<td><input type="text" id="teacherName" name="teacherName" class="col-xs-10 col-sm-10" th:required="required"/></td>
 														</tr>
 														<tr style="height: 15px;"></tr>
 														<tr>
 															<td><label >密码：</label></td>
-															<td><input type="password" id="teachPassword" name="password" class="col-xs-10 col-sm-10" minlength="6" th:required="required"/></td>
+															<td><input type="password" id="teacherPassword" name="teacherPassword" class="col-xs-10 col-sm-10" minlength="6" th:required="required"/></td>
 														</tr>
 														<tr style="height: 15px;"></tr>
 														<tr>
-															<td><label>学院：</label></td>
-															<td><input type="text" id="teachDepartment" name="department" class="col-xs-10 col-sm-10" th:required="required" /></td>
+															<td><label>年龄：</label></td>
+															<td><input type="text" id="teacherAge" name="teacherAge" class="col-xs-10 col-sm-10" th:required="required" /></td>
 														</tr>
 														<tr style="height: 15px;"></tr>
 														<tr>
-															<td><label>职位：</label></td>
-															<td><input type="text" id="teachPosition" name="position" class="col-xs-10 col-sm-10" th:required="required" /></td>
+															<td><label>性别：</label></td>
+															<td><input type="text" id="teachGender" name="teachGender" class="col-xs-10 col-sm-10" th:required="required" /></td>
 														</tr>
 														<tr style="height: 15px;"></tr>
 														<tr>
-															<td><label>电话：</label></td>
-															<td><input type="tel" id="teachTel" name="telephone" class="col-xs-10 col-sm-10" th:required="required" /></td>
+															<td><label>所属学院：</label></td>
+															<td><input type="tel" id="teacherDepartment" name="teacherDepartment" class="col-xs-10 col-sm-10" th:required="required" /></td>
 														</tr>
 														<tr style="height: 15px;"></tr>
 														<tr>
-															<td><label>邮箱：</label></td>
-															<td><input type="text" id="teachEmail" name="email" class="col-xs-10 col-sm-10" th:required="required" /></td>
+															<td><label>民族：</label></td>
+															<td><input type="tel" id="teacherNative" name="teacherNative" class="col-xs-10 col-sm-10" th:required="required" /></td>
+														</tr>
+														<tr style="height: 15px;"></tr>
+														<tr>
+															<td><label>家庭住址：</label></td>
+															<td><input type="tel" id="teacherAddress" name="teacherAddress" class="col-xs-10 col-sm-10" th:required="required" /></td>
+														</tr>
+														<tr style="height: 15px;"></tr>
+														<tr>
+															<td><label>联系方式：</label></td>
+															<td><input type="tel" id="teacherPhone" name="teacherPhone" class="col-xs-10 col-sm-10" th:required="required" /></td>
+														</tr>
+														<tr style="height: 15px;"></tr>
+														<tr>
+															<td><label>电子邮件：</label></td>
+															<td><input type="text" id="teacherEmail" name="teacherEmail" class="col-xs-10 col-sm-10" th:required="required" /></td>
 														</tr>
 														<tr style="height: 15px;">
 														</tr>
@@ -439,7 +455,7 @@
 
 		<script type="text/javascript">
             function editInfo(obj) {
-                var tds = $(obj).parent().parent().parent().find("td");
+                let tds = $(obj).parent().parent().parent().find("td");
                 // alert(tds);
                 $('#teachId').val(tds.eq(0).text());
                 $('#teachName').val(tds.eq(1).text());
@@ -451,24 +467,27 @@
             }
             function update() {
                 // 获取模态框数据
-                var teachId = $("#teachId").val();
-                var teachName = $("#teachName").val();
-                var teachPassword = $("#teachPassword").val();
-                var teachDepartment = $("#teachDepartment").val();
-                var teachPosition = $("#teachPosition").val();
-                var teachTelephone = $("#teachTel").val();
-                var teachEmail = $("#teachEmail").val();
+				let teacherId = $("#teacherId").val();
+				let teacherName = $("#teacherName").val();
+				let teacherPassword = $("#teacherPassword").val();
+				let teacherAge = $("#teacherAge").val();
+				let teacherGender = $("#teacherGender").val();
+				let teacherDepartment = $("#teacherDepartment").val();
+				let teacherNative = $("#teacherNative").val();
+				let teacherAddress = $("#teacherNative").val();
+				let teacherPhone = $("#teacherPhone").val();
+				let teacherEmail = $("#teacherEmail").val();
 
-                var teacher = {
-                    "id": teachId,
-                    "name": teachName,
-                    "password": teachPassword,
-					"department": teachDepartment,
-                    "position": teachPosition,
-                    "telephone": teachTelephone,
-                    "email": teachEmail
-                };
-                $.ajax({
+				const teacher = {
+					"teacherId": teacherId,
+					"teacherName": teacherName,
+					"teacherPassword": teacherPassword,
+					"teacherDepartment": teacherDepartment,
+					"teacherPosition": teacherPosition,
+					"teacherPhone": teacherPhone,
+					"teacherEmail": teacherEmail
+				};
+				$.ajax({
                     type: "post",
                     url: "/teacherUpdate",
                     async: true,

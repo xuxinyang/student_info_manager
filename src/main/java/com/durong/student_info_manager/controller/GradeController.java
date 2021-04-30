@@ -1,6 +1,9 @@
 package com.durong.student_info_manager.controller;
 
+import com.durong.student_info_manager.domain.Course;
 import com.durong.student_info_manager.domain.Grade;
+import com.durong.student_info_manager.domain.Student;
+import com.durong.student_info_manager.domain.Teacher;
 import com.durong.student_info_manager.service.CourseService;
 import com.durong.student_info_manager.service.GradeService;
 import com.durong.student_info_manager.service.StudentService;
@@ -11,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -52,13 +56,21 @@ public class GradeController {
     @RequestMapping(value = "/studentLookGrade", method = {RequestMethod.GET, RequestMethod.POST})
     public String studentLookGrade(Model model, String studentId) {
         List<Grade> grades = gradeService.findAllByStudentId(studentId);
+        Student student = studentService.findById(studentId);
         model.addAttribute("grades", grades);
+        model.addAttribute("student", student);
         return "student/stuLookGrade";
     }
     // 教师端通过课程ID进行查找
     @RequestMapping(value = "/teacherLookGrade", method = {RequestMethod.GET, RequestMethod.POST})
-    public String teacherLookGrade(Model model, String courseId) {
-        List<Grade> grades = gradeService.findAllByStudentId(courseId);
+    public String teacherLookGrade(Model model, String teacherId) {
+        List<Course> courses = courseService.findAllCourseByTeacherId(teacherId);
+        List<Grade> grades = new ArrayList<Grade>();
+        for (Course c : courses) {
+            grades.addAll(gradeService.findAllByCourseId(c.getCourseId()));
+        }
+        Teacher teacher = teacherService.findById(teacherId);
+        model.addAttribute("teacher", teacher);
         model.addAttribute("grades", grades);
         return "teacher/teachGradeManager";
     }

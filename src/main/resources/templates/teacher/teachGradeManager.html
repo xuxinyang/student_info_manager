@@ -47,7 +47,7 @@
                 <li class="green">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="ace-icon fa fa-bell icon-animated-vertical"></i>
-                        <span class="badge badge-purple">7</span>
+                        <span class="badge badge-purple">3</span>
                     </a>
                 </li>
 
@@ -56,8 +56,8 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <img alt="照片" class="nav-user-photo" src="img/avatars/user.jpg"/>
                         <span class="user-info">
-									欢迎您<br th:text="${teacher.name}"/>
-								</span>
+                            欢迎您<br th:text="${teacher.teacherName}"/>
+                        </span>
                     </a>
                 </li>
 
@@ -117,7 +117,7 @@
 				<b class="arrow"></b>
 			</li>
 			<li class="">
-				<a th:href="#">
+				<a href="">
 					<i class="menu-icon fa fa-bar-chart-o"></i>
 					<span class="menu-text"> 成绩分析 </span>
 				</a>
@@ -147,7 +147,7 @@
                     <a href="#">学生信息管理系统</a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)">评教结果</a>
+                    <a href="javascript:void(0)">学生成绩</a>
                 </li>
                 <li>
                     <a href="javascript:void(0)">师生评教结果</a>
@@ -166,7 +166,262 @@
         </div>
         <!-- /section:basics/content.breadcrumbs -->
         <div class="page-content">
-            <div class="chart" id="chart" style="width: 900px; height: 500px; margin: 0 auto"></div>
+            <div class="page-content-area">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table id="sample-table-1" class="table table-striped table-bordered table-hover" style="text-align: center;">
+                                    <thead>
+                                    <tr>
+                                        <th class="center">成绩ID</th>
+                                        <th class="center">学生ID</th>
+                                        <th class="center">分数</th>
+                                        <th class="center">操作</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                    <tr th:each="grade:${grades}">
+                                        <td th:text="${grade.gradeId}"></td>
+                                        <td th:text="${grade.studentId}"></td>
+                                        <td th:text="${grade.gradeScore}"></td>
+                                        <td>
+                                            <div class="hidden-sm hidden-xs btn-group">
+                                                <a role="button" class="green" data-toggle="modal" onclick="editInfo(this);" href="javascript:void(0)">
+                                                    <i class="ace-icon fa fa-pencil bigger-140"></i>
+                                                </a>
+                                                &nbsp;&nbsp;&nbsp;
+                                                <a th:href="@{/teacherDeleteById?teacherId=}+${teacher.teacherId}" role="button" class="red"  data-toggle="modal">
+                                                    <i class="ace-icon fa fa-trash-o bigger-140"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div align="center">
+                                    <ul class="pagination">
+                                        <li class="disabled">
+                                            <a href="#">首页</a>
+                                        </li>
+                                        <li class="active">
+                                            <a href="#">上一页</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">下一页</a>
+                                        </li>
+                                        <li class="">
+                                            <a href="#">尾页</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div><!-- /.span -->
+                        </div><!-- /.row -->
+                        <div id="modal-table1" class="modal fade" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header no-padding">
+                                        <div class="table-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                <span class="white">&times;</span>
+                                            </button>
+                                            教师信息修改
+                                        </div>
+                                    </div>
+                                    <div class="modal-body no-padding">
+                                        <!-- PAGE CONTENT BEGINS -->
+                                        <!-- #section:elements.form -->
+                                        <div class="space-4"></div>
+                                        <form id="updateForm" class="form-horizontal" role="form" action="# #" method="post">
+                                            <table style="text-align: center">
+                                                <tbody>
+                                                <tr>
+                                                    <td width="10%"><label>编号：</label></td>
+                                                    <td width="30%"><input type="text" id="teacherId" name="teacherId" class="col-xs-10 col-sm-10"  th:readonly="readlonly"/></td>
+                                                </tr>
+                                                <tr style="height: 15px;"></tr>
+                                                <tr>
+                                                    <td><label>姓名：</label></td>
+                                                    <td><input type="text" id="teacherName" name="teacherName" class="col-xs-10 col-sm-10" th:required="required"/></td>
+                                                </tr>
+                                                <tr style="height: 15px;"></tr>
+                                                <tr>
+                                                    <td><label >密码：</label></td>
+                                                    <td><input type="password" id="teacherPassword" name="teacherPassword" class="col-xs-10 col-sm-10" minlength="6" th:required="required"/></td>
+                                                </tr>
+                                                <tr style="height: 15px;"></tr>
+                                                <tr>
+                                                    <td><label>年龄：</label></td>
+                                                    <td><input type="text" id="teacherAge" name="teacherAge" class="col-xs-10 col-sm-10" th:required="required" /></td>
+                                                </tr>
+                                                <tr style="height: 15px;"></tr>
+                                                <tr>
+                                                    <td><label>性别：</label></td>
+                                                    <td><input type="text" id="teachGender" name="teachGender" class="col-xs-10 col-sm-10" th:required="required" /></td>
+                                                </tr>
+                                                <tr style="height: 15px;"></tr>
+                                                <tr>
+                                                    <td><label>所属学院：</label></td>
+                                                    <td><input type="tel" id="teacherDepartment" name="teacherDepartment" class="col-xs-10 col-sm-10" th:required="required" /></td>
+                                                </tr>
+                                                <tr style="height: 15px;"></tr>
+                                                <tr>
+                                                    <td><label>民族：</label></td>
+                                                    <td><input type="tel" id="teacherNative" name="teacherNative" class="col-xs-10 col-sm-10" th:required="required" /></td>
+                                                </tr>
+                                                <tr style="height: 15px;"></tr>
+                                                <tr>
+                                                    <td><label>家庭住址：</label></td>
+                                                    <td><input type="tel" id="teacherAddress" name="teacherAddress" class="col-xs-10 col-sm-10" th:required="required" /></td>
+                                                </tr>
+                                                <tr style="height: 15px;"></tr>
+                                                <tr>
+                                                    <td><label>联系方式：</label></td>
+                                                    <td><input type="tel" id="teacherPhone" name="teacherPhone" class="col-xs-10 col-sm-10" th:required="required" /></td>
+                                                </tr>
+                                                <tr style="height: 15px;"></tr>
+                                                <tr>
+                                                    <td><label>电子邮件：</label></td>
+                                                    <td><input type="text" id="teacherEmail" name="teacherEmail" class="col-xs-10 col-sm-10" th:required="required" /></td>
+                                                </tr>
+                                                <tr style="height: 15px;">
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td style="height: 100px">
+                                                        <button class="btn btn-info" type="button" onclick="update()" href="javascript:void(0);">
+                                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                                            修改
+                                                        </button>
+                                                        <button class="btn" style="margin-left: 20px;" data-dismiss="modal">
+                                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                            关闭
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- PAGE CONTENT ENDS -->
+                        <div id="modal-table2" class="modal fade" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header no-padding">
+                                        <div class="table-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                <span class="white">&times;</span>
+                                            </button>
+                                            新增教师
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-body no-padding">
+                                        <!-- PAGE CONTENT BEGINS -->
+                                        <form class="form-horizontal" role="form" th:action="@{/teacherAdd}" th:method="post">
+                                            <!-- #section:elements.form -->
+                                            <div class="space-4"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">编号：</label>
+
+                                                <div class="col-sm-9">
+                                                    <input type="text" th:name="id" placeholder="请输入教师编号" th:required="required" class="col-xs-10 col-sm-10"/>
+                                                </div>
+                                            </div>
+                                            <div class="space-4"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right">密码：</label>
+
+                                                <div class="col-sm-9">
+                                                    <input type="password"  th:name="password" th:required="required" minlength="6" placeholder="请输入密码" class=" col-xs-10 col-sm-10" />
+                                                </div>
+                                            </div>
+
+                                            <!-- /section:elements.form -->
+                                            <div class="space-4"></div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-2">姓名：</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" id="form-field-2" th:name="name" th:required="required" placeholder="教师名字" class="col-xs-10 col-sm-10" />
+                                                </div>
+                                            </div>
+
+                                            <div class="space-4"></div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">学院：</label>
+                                                <div class="col-sm-2">
+                                                    <div class="pos-rel">
+                                                        <select class="form-control" th:name="department" style="width: 368px;">
+                                                            <option value="">请选择学院</option>
+                                                            <option value="计算机学院">计算机学院</option>
+                                                            <option value="石油工程学院">石油工程学院</option>
+                                                            <option value="化学化工学院">化学化工学院</option>
+                                                            <option value="机械工程学院">机械工程学院</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="space-4"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1" >职位：</label>
+                                                <div class="col-sm-2">
+                                                    <div class="pos-rel">
+                                                        <select class="form-control" id="form-field-select-1" th:name="position" style="width: 368px;" >
+                                                            <option value="">请选择职位</option>
+                                                            <option value="教授">教授</option>
+                                                            <option value="副教授">副教授</option>
+                                                            <option value="讲师">讲师</option>
+                                                            <option value="助教">助教</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="space-4"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">电话：</label>
+
+                                                <div class="col-sm-9">
+                                                    <input type="tel" th:name="telephone" th:required="required" placeholder="如xxx-xxxx-xxxx" class="col-xs-10 col-sm-10"  />
+                                                </div>
+                                            </div>
+                                            <div class="space-4"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">邮箱：</label>
+
+                                                <div class="col-sm-9">
+                                                    <input type="email" id="form-field-1" th:name="email" class="col-xs-10 col-sm-10" placeholder="XXXX@xsyu.edu.cn" th:required="required"/>
+                                                </div>
+                                            </div>
+                                            <div class="space-4"></div>
+                                            <div class="clearfix form-actions">
+                                                <div class="col-md-offset-3 col-md-9">
+                                                    <button class="btn btn-info" type="submit">
+                                                        <i class="ace-icon fa fa-check bigger-110"></i>
+                                                        立即提交
+                                                    </button>
+
+                                                    &nbsp; &nbsp; &nbsp;
+                                                    <button class="btn" type="reset">
+                                                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                        重置
+                                                    </button>
+                                                </div>
+                                            </div><!-- /.row -->
+                                        </form>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- PAGE CONTENT ENDS -->
+                    </div>
+                </div><!-- /.row -->
+            </div><!-- /.page-content-area -->
         </div><!-- /.page-content -->
     </div><!-- /.main-content -->
 
@@ -175,7 +430,7 @@
             <!-- #section:basics/footer -->
             <div class="footer-content">
 						<span class="bigger-120">
-							版权所有&copy;<a href="https://www.xijing.edu.cn/" target="_blank">西安石油大学</a>
+							版权所有&copy;<a href="https://www.xijing.edu.cn/" target="_blank">西京学院</a>
 						</span>
             </div>
         </div>
@@ -185,89 +440,89 @@
         <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
     </a>
 </div><!-- /.main-container -->
-<script th:inline="javascript">
-    /*<![CDATA[*/
+<!--<script th:inline="javascript">-->
+<!--    /*<![CDATA[*/-->
 
-    $(document).ready(function () {
-        //var teacherName = /*[[${teacher.name}]]*/ null;
-        //alert(teacherName);
+<!--    $(document).ready(function () {-->
+<!--        //var teacherName = /*[[${teacher.teacherName}]]*/ null;-->
+<!--        //alert(teacherName);-->
 
-        Highcharts.chart('chart', {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: '师生评教结果统计图'
-            },
-            subtitle: {
-                text: 'Result of Comment'
-            },
-            xAxis: {
-                categories: ['1.教学勤勉热忱，能按时上下课，不擅自停课，调课',
-                    '2.上课能严格要求，认真辅导答疑，及时批改作业',
-                    '3.平易近人，能虚心听取学生的意见和建议并及时改进工作',
-                    '4.讲课有一定深度，有新意，给我留下了深刻的印象',
-                    '5.思路清晰，概念准确，重点难点突出',
-                    '6.能理论联系实际，及时介绍学科发展动态',
-                    '7.本课程教材质量好，适合教学要求',
-                    '8.语言清晰流畅，板书设计合理，字迹工整',
-                    '9.能启迪学生思维，引导学生掌握学习方法和研究方法',
-                    '10.注意因材施教，注重学生的个性发展和创新意识的培养',
-                    '11.恰当运用现代化辅助教学手段提高教学效果',
-                    '12.能有效调节课堂信息，调动学生的学习积极性',
-                    '13.总体来说，这门课的老师很称职，学习这门课收获很大'],
-                crosshair: true
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: '等级票数 (张)'
-                }
-            },
-            tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} 张</b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.1,
-                    borderWidth: 0
-                }
-            },
-            credits: {
-                enabled: false
-            },
-            series: [{
-                name: 'A：满意',
-                data: /*[[${dataA}]]*/ []
-            }, {
-                name: 'B：比较满意',
-                data: /*[[${dataB}]]*/ []
-            }, {
-                name: 'C：尚可',
-                data: /*[[${dataC}]]*/ []
-            }, {
-                name: 'D：不满意',
-                data: /*[[${dataD}]]*/ []
-            }],
-        })
-        // var json = {};
-        // json.chart = chart;
-        // json.title = title;
-        // json.subtitle = subtitle;
-        // json.tooltip = tooltip;
-        // json.xAxis = xAxis;
-        // json.yAxis = yAxis;
-        // json.series = series;
-        // json.plotOptions = plotOptions;
-        // json.credits = credits;
-        // $("#chart").highcharts(json).show();
-    });
-    /*]]>*/
-</script>
+<!--        Highcharts.chart('chart', {-->
+<!--            chart: {-->
+<!--                type: 'column'-->
+<!--            },-->
+<!--            title: {-->
+<!--                text: '师生评教结果统计图'-->
+<!--            },-->
+<!--            subtitle: {-->
+<!--                text: 'Result of Comment'-->
+<!--            },-->
+<!--            xAxis: {-->
+<!--                categories: ['1.教学勤勉热忱，能按时上下课，不擅自停课，调课',-->
+<!--                    '2.上课能严格要求，认真辅导答疑，及时批改作业',-->
+<!--                    '3.平易近人，能虚心听取学生的意见和建议并及时改进工作',-->
+<!--                    '4.讲课有一定深度，有新意，给我留下了深刻的印象',-->
+<!--                    '5.思路清晰，概念准确，重点难点突出',-->
+<!--                    '6.能理论联系实际，及时介绍学科发展动态',-->
+<!--                    '7.本课程教材质量好，适合教学要求',-->
+<!--                    '8.语言清晰流畅，板书设计合理，字迹工整',-->
+<!--                    '9.能启迪学生思维，引导学生掌握学习方法和研究方法',-->
+<!--                    '10.注意因材施教，注重学生的个性发展和创新意识的培养',-->
+<!--                    '11.恰当运用现代化辅助教学手段提高教学效果',-->
+<!--                    '12.能有效调节课堂信息，调动学生的学习积极性',-->
+<!--                    '13.总体来说，这门课的老师很称职，学习这门课收获很大'],-->
+<!--                crosshair: true-->
+<!--            },-->
+<!--            yAxis: {-->
+<!--                min: 0,-->
+<!--                title: {-->
+<!--                    text: '等级票数 (张)'-->
+<!--                }-->
+<!--            },-->
+<!--            tooltip: {-->
+<!--                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',-->
+<!--                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +-->
+<!--                    '<td style="padding:0"><b>{point.y:.1f} 张</b></td></tr>',-->
+<!--                footerFormat: '</table>',-->
+<!--                shared: true,-->
+<!--                useHTML: true-->
+<!--            },-->
+<!--            plotOptions: {-->
+<!--                column: {-->
+<!--                    pointPadding: 0.1,-->
+<!--                    borderWidth: 0-->
+<!--                }-->
+<!--            },-->
+<!--            credits: {-->
+<!--                enabled: false-->
+<!--            },-->
+<!--            series: [{-->
+<!--                name: 'A：满意',-->
+<!--                data: /*[[${dataA}]]*/ []-->
+<!--            }, {-->
+<!--                name: 'B：比较满意',-->
+<!--                data: /*[[${dataB}]]*/ []-->
+<!--            }, {-->
+<!--                name: 'C：尚可',-->
+<!--                data: /*[[${dataC}]]*/ []-->
+<!--            }, {-->
+<!--                name: 'D：不满意',-->
+<!--                data: /*[[${dataD}]]*/ []-->
+<!--            }],-->
+<!--        })-->
+<!--        // var json = {};-->
+<!--        // json.chart = chart;-->
+<!--        // json.title = title;-->
+<!--        // json.subtitle = subtitle;-->
+<!--        // json.tooltip = tooltip;-->
+<!--        // json.xAxis = xAxis;-->
+<!--        // json.yAxis = yAxis;-->
+<!--        // json.series = series;-->
+<!--        // json.plotOptions = plotOptions;-->
+<!--        // json.credits = credits;-->
+<!--        // $("#chart").highcharts(json).show();-->
+<!--    });-->
+<!--    /*]]>*/-->
+<!--</script>-->
 </body>
 </html>
