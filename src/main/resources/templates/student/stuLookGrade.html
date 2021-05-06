@@ -65,70 +65,70 @@
 <div class="main-container" id="main-container">
     <!-- #section:basics/sidebar -->
     <div class="sidebar responsive" id="sidebar">
-		<ul class="nav nav-list">
-			<li class="">·
-				<a href="#">
-					<i class="menu-icon fa fa-delicious"></i>
-					<span class="menu-text"> 学生信息管理系统 </span>
-				</a>
-				<b class="arrow"></b>
-			</li>
-			<li class="">
-				<a href="#" class="dropdown-toggle">
-					<i class="menu-icon fa fa-user"></i>
+        <ul class="nav nav-list">
+            <li class="">·
+                <a href="#">
+                    <i class="menu-icon fa fa-delicious"></i>
+                    <span class="menu-text"> 学生信息管理系统 </span>
+                </a>
+                <b class="arrow"></b>
+            </li>
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-user"></i>
 
-					<span class="menu-text">
+                    <span class="menu-text">
 								基本信息
-						<!-- /section:basics/sidebar.layout.badge -->
+                        <!-- /section:basics/sidebar.layout.badge -->
 							</span>
 
-					<b class="arrow fa fa-angle-down"></b>
-				</a>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
 
-				<b class="arrow"></b>
+                <b class="arrow"></b>
 
-				<ul class="submenu">
-					<li class="">
-						<a th:href="@{/studentFindByIdFromStudent?studentId=}+${student.studentId}">
-							<i class="menu-icon fa fa-caret-right"></i>
-							信息查看
-						</a>
-						<b class="arrow"></b>
-					</li>
-					<li class="">
-						<a th:href="@{/studentUpdatePwd?studentId=}+${student.studentId}">
-							<i class="menu-icon fa fa-caret-right"></i>
-							密码修改
-						</a>
-						<b class="arrow"></b>
-					</li>
-				</ul>
-			</li>
-			<li class="">
-				<a th:href="@{/studentChooseCourse?studentId=} + ${student.studentId}">
-					<i class="menu-icon fa fa-book"></i>
-					<span class="menu-text"> 选课操作 </span>
-				</a>
+                <ul class="submenu">
+                    <li class="">
+                        <a th:href="@{/studentFindByIdFromStudent?studentId=}+${student.studentId}">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            信息查看
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a th:href="@{/studentUpdatePwd?studentId=}+${student.studentId}">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            密码修改
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+            <li class="">
+                <a th:href="@{/studentChooseCourse?studentId=} + ${student.studentId}">
+                    <i class="menu-icon fa fa-book"></i>
+                    <span class="menu-text"> 选课操作 </span>
+                </a>
 
-				<b class="arrow"></b>
-			</li>
-			<li class="active">
-				<a th:href="@{/studentLookGrade?studentId=} + ${student.studentId}">
-					<i class="menu-icon fa fa-bar-chart-o"></i>
-					<span class="menu-text"> 成绩查看 </span>
-				</a>
+                <b class="arrow"></b>
+            </li>
+            <li class="active">
+                <a th:href="@{/studentLookGrade?studentId=} + ${student.studentId}">
+                    <i class="menu-icon fa fa-bar-chart-o"></i>
+                    <span class="menu-text"> 成绩查看 </span>
+                </a>
 
-				<b class="arrow"></b>
-			</li>
-			<li class="">
-				<a th:href="@{/userLogin}">
-					<i class="menu-icon fa fa-outdent"></i>
-					<span class="menu-text"> 退出登陆 </span>
-				</a>
+                <b class="arrow"></b>
+            </li>
+            <li class="">
+                <a th:href="@{/userLogin}">
+                    <i class="menu-icon fa fa-outdent"></i>
+                    <span class="menu-text"> 退出登陆 </span>
+                </a>
 
-				<b class="arrow"></b>
-			</li>
-		</ul><!-- /.nav-list -->
+                <b class="arrow"></b>
+            </li>
+        </ul><!-- /.nav-list -->
 
         <!-- #section:basics/sidebar.layout.minimize -->
         <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
@@ -154,8 +154,8 @@
 
             <!-- #section:basics/content.searchbox -->
         </div>
-        <div class="page-content-area">
-            <form>
+        <div class="page-content">
+            <div class="page-content-area">
                 <div class="row">
                     <div class="col-xs-12">
                         <!-- PAGE CONTENT BEGINS -->
@@ -172,9 +172,9 @@
                                     </thead>
 
                                     <tbody>
-                                    <tr th:each="grade:${grades}">
+                                    <tr th:each="grade, item:${grades}">
                                         <td th:text="${grade.courseId}"></td>
-                                        <td th:text="${grade.studentId}"></td>
+                                        <td th:text="${courses[item.index].courseName}"></td>
                                         <td th:text="${grade.gradeScore}"></td>
                                     </tr>
                                     </tbody>
@@ -184,7 +184,7 @@
                                         <li class="disabled">
                                             <a href="#">首页</a>
                                         </li>
-                                        <li class="active">
+                                        <li class="">
                                             <a href="#">上一页</a>
                                         </li>
                                         <li>
@@ -199,29 +199,29 @@
                         </div><!-- /.row -->
                     </div><!-- /.row -->
                 </div>
-            </form>
-        </div><!-- /.page-content-area -->
+            </div><!-- /.page-content-area -->
+        </div><!-- /.page-content -->
     </div><!-- /.main-content -->
-    <div class="footer">
-        <div class="footer-inner">
-            <!-- #section:basics/footer -->
-            <div class="footer-content">
+        <div class="footer">
+            <div class="footer-inner">
+                <!-- #section:basics/footer -->
+                <div class="footer-content">
 						<span class="bigger-120">
 							版权所有&copy;<a href="https://www.xijing.edu.cn/" target="_blank">西京学院</a>
 						</span>
+                </div>
+                <!-- /section:basics/footer -->
             </div>
-            <!-- /section:basics/footer -->
         </div>
-    </div>
-    <a class="btn-scroll-up btn btn-sm btn-inverse" href="#" id="btn-scroll-up">
-        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-    </a>
-</div><!-- /.main-container -->
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.mobile.custom.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/ace-elements.min.js"></script>
-<script src="js/ace.min.js"></script>
+        <a class="btn-scroll-up btn btn-sm btn-inverse" href="#" id="btn-scroll-up">
+            <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+        </a>
+    </div><!-- /.main-container -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.mobile.custom.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/ace-elements.min.js"></script>
+    <script src="js/ace.min.js"></script>
 
 </body>
 </html>

@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="css/font-awesome.min.css"/>
     <link rel="stylesheet" href="css/ace-fonts.css"/>
     <link rel="stylesheet" href="css/ace.min.css" id="main-ace-style"/>
+    <script src="js/highcharts.js"></script>
+    <script src="js/highcharts-3d.js"></script>
+    <script src="js/exporting.js"></script>
     <script src="js/ace-extra.min.js"></script>
 </head>
 <body class="no-skin">
@@ -110,7 +113,7 @@
 				<b class="arrow"></b>
 			</li>
 			<li class="active">
-				<a th:href="#">
+				<a th:href="@{/teacherGradeAnalysis?teacherId=}+${teacher.teacherId}">
 					<i class="menu-icon fa fa-bar-chart-o"></i>
 					<span class="menu-text"> 成绩分析 </span>
 				</a>
@@ -143,481 +146,100 @@
                     <a href="#">学生信息管理系统</a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)">教师评教</a>
+                    <a href="javascript:void(0)">成绩分析展示</a>
                 </li>
             </ul><!-- /.breadcrumb -->
-
-            <!-- #section:basics/content.searchbox -->
-            <div class="nav-search" id="nav-search">
-                <form class="form-search" action="/teachAssessFindByTerm" th:method="post">
-                    <input th:type="hidden" th:name="userId" th:value="${teacher.id}"/>
-                    <select name="term" class="nav-search-input">
-                        <option value="">---请选择学期---</option>
-                        <option value="2017-2018-1">2017-2018-1</option>
-                        <option value="2017-2018-2">2017-2018-2</option>
-                        <option value="2018-2019-1">2018-2019-1</option>
-                    </select>
-                    <button class="btn btn-white btn-default btn-round btn-sm" type="submit">查找</button>
-                </form>
-            </div><!-- /.nav-search -->
         </div>
         <div class="page-content">
 
             <!-- /section:settings.box -->
             <div class="page-content-area">
-
-                <div class="row">
-                    <div class="col-xs-12">
-                        <!-- PAGE CONTENT BEGINS -->
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <table id="sample-table-1" class="table table-striped table-bordered table-hover"
-                                       style="text-align: center;">
-                                    <thead>
-                                    <tr>
-                                        <th class="center">教师编号</th>
-                                        <th class="center">任课教师</th>
-                                        <th class="center">课程代码</th>
-                                        <th class="center">课程名称</th>
-                                        <th class="center">评教状态</th>
-                                        <th class="center">操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="userAssess:${userAssesses}">
-                                        <input th:type="hidden" th:value="${userAssess.id}"/>
-                                        <input th:type="hidden" th:value="${userAssess.option1}"/>
-                                        <input th:type="hidden" th:value="${userAssess.option2}"/>
-                                        <input th:type="hidden" th:value="${userAssess.option3}"/>
-                                        <input th:type="hidden" th:value="${userAssess.option4}"/>
-                                        <input th:type="hidden" th:value="${userAssess.option5}"/>
-                                        <input th:type="hidden" th:value="${userAssess.option6}"/>
-                                        <input th:type="hidden" th:value="${userAssess.option7}"/>
-                                        <input th:type="hidden" th:value="${userAssess.option8}"/>
-                                        <input th:type="hidden" th:value="${userAssess.option9}"/>
-                                        <input th:type="hidden" th:value="${userAssess.option10}"/>
-                                        <input th:type="hidden" th:value="${userAssess.option11}"/>
-                                        <input th:type="hidden" th:value="${userAssess.option12}"/>
-                                        <input th:type="hidden" th:value="${userAssess.option13}"/>
-                                        <td th:text="${userAssess.courseId}"></td>
-                                        <td th:text="${userAssess.courseName}"></td>
-                                        <td th:text="${userAssess.teacherId}"></td>
-                                        <td th:text="${userAssess.teacherName}"></td>
-                                        <td th:text="${userAssess.statues}"></td>
-                                        <td th:if="${userAssess.statues eq '未评教'}">
-                                            <div class="hidden-sm hidden-xs btn-group">
-                                                <a data-toggle="modal" onclick="editInfo(this);"
-                                                   href="javascript:void(0);">
-                                                    <i class="ace-icon fa fa-pencil bigger-140"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                        <td th:if="${userAssess.statues eq '已评教'}">
-                                            <div class="hidden-sm hidden-xs btn-group">
-                                                <a onclick="lookInfo(this)" href="javascript:void(0)"
-                                                   data-toggle="modal">
-                                                    <i class="ace-icon fa fa-search bigger-140"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div><!-- /.span -->
-                        </div><!-- /.row -->
-                        <div id="modal-table" class="modal fade" tabindex="-1">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header no-padding">
-                                        <div class="table-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                                <span class="white">&times;</span>
-                                            </button>
-                                            教学评估
-                                        </div>
-                                    </div>
-                                    <div class="modal-body no-padding">
-                                        <form id="updateForm" th:action="@{/teacherToAssess?userId=}+${teacher.id}"
-                                              th:method="post">
-                                            <!--table table-striped table-bordered table-hover no-margin-bottom no-border-top-->
-                                            <table class="table table-striped table-advance table-hover">
-                                                <tbody>
-                                                <tr>
-                                                    <td colspan="4"><input th:type="hidden" name="id" id="upId"/></td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4">1.教学勤勉热忱，能按时上下课，不擅自停课，调课</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input name="option1" type="radio" class="ace" value="A"/>
-                                                        <span class="lbl">A.满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option1" type="radio" class="ace" value="B"/>
-                                                        <span class="lbl">B.比较满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option1" type="radio" class="ace" value="C"/>
-                                                        <span class="lbl">C.尚可</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option1" type="radio" class="ace" value="D"/>
-                                                        <span class="lbl">D.不满意</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4">2.上课能严格要求，认真辅导答疑，及时批改作业</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input name="option2" type="radio" class="ace" value="A"/>
-                                                        <span class="lbl">A.满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option2" type="radio" class="ace" value="B"/>
-                                                        <span class="lbl">B.比较满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option2" type="radio" class="ace" value="C"/>
-                                                        <span class="lbl">C.尚可</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option2" type="radio" class="ace" value="D"/>
-                                                        <span class="lbl">D.不满意</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4">3.平易近人，能虚心听取学生的意见和建议并及时改进工作</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input name="option3" type="radio" class="ace" value="A"/>
-                                                        <span class="lbl">A.满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option3" type="radio" class="ace" value="B"/>
-                                                        <span class="lbl">B.比较满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option3" type="radio" class="ace" value="C"/>
-                                                        <span class="lbl">C.尚可</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option3" type="radio" class="ace" value="D"/>
-                                                        <span class="lbl">D.不满意</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4">4.讲课有一定深度，有新意，给我留下了深刻的印象</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input name="option4" type="radio" class="ace" value="A"/>
-                                                        <span class="lbl">A.满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option4" type="radio" class="ace" value="B"/>
-                                                        <span class="lbl">B.比较满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option4" type="radio" class="ace" value="C"/>
-                                                        <span class="lbl">C.尚可</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option4" type="radio" class="ace" value="D"/>
-                                                        <span class="lbl">D.不满意</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4">5.思路清晰，概念准确，重点难点突出</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input name="option5" type="radio" class="ace" value="A"/>
-                                                        <span class="lbl">A.满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option5" type="radio" class="ace" value="B"/>
-                                                        <span class="lbl">B.比较满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option5" type="radio" class="ace" value="C"/>
-                                                        <span class="lbl">C.尚可</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option5" type="radio" class="ace" value="D"/>
-                                                        <span class="lbl">D.不满意</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4">6.能理论联系实际，及时介绍学科发展动态</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input name="option6" type="radio" class="ace" value="A"/>
-                                                        <span class="lbl">A.满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option6" type="radio" class="ace" value="B"/>
-                                                        <span class="lbl">B.比较满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option6" type="radio" class="ace" value="C"/>
-                                                        <span class="lbl">C.尚可</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option6" type="radio" class="ace" value="D"/>
-                                                        <span class="lbl">D.不满意</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4">7.本课程教材质量好，适合教学要求</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input name="option7" type="radio" class="ace" value="A"/>
-                                                        <span class="lbl">A.满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option7" type="radio" class="ace" value="B"/>
-                                                        <span class="lbl">B.比较满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option7" type="radio" class="ace" value="C"/>
-                                                        <span class="lbl">C.尚可</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option7" type="radio" class="ace" value="D"/>
-                                                        <span class="lbl">D.不满意</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4">8.语言清晰流畅，板书设计合理，字迹工整</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input name="option8" type="radio" class="ace" value="A"/>
-                                                        <span class="lbl">A.满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option8" type="radio" class="ace" value="B"/>
-                                                        <span class="lbl">B.比较满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option8" type="radio" class="ace" value="C"/>
-                                                        <span class="lbl">C.尚可</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option8" type="radio" class="ace" value="D"/>
-                                                        <span class="lbl">D.不满意</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4">9.能启迪学生思维，引导学生掌握学习方法和研究方法</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input name="option9" type="radio" class="ace" value="A"/>
-                                                        <span class="lbl">A.满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option9" type="radio" class="ace" value="B"/>
-                                                        <span class="lbl">B.比较满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option9" type="radio" class="ace" value="C"/>
-                                                        <span class="lbl">C.尚可</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option9" type="radio" class="ace" value="D"/>
-                                                        <span class="lbl">D.不满意</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4">10.注意因材施教，注重学生的个性发展和创新意识的培养</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input name="option10" type="radio" class="ace" value="A"/>
-                                                        <span class="lbl">A.满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option10" type="radio" class="ace" value="B"/>
-                                                        <span class="lbl">B.比较满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option10" type="radio" class="ace" value="C"/>
-                                                        <span class="lbl">C.尚可</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option10" type="radio" class="ace" value="D"/>
-                                                        <span class="lbl">D.不满意</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4">11.恰当运用现代化辅助教学手段提高教学效果</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input name="option11" type="radio" class="ace" value="A"/>
-                                                        <span class="lbl">A.满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option11" type="radio" class="ace" value="B"/>
-                                                        <span class="lbl">B.比较满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option11" type="radio" class="ace" value="C"/>
-                                                        <span class="lbl">C.尚可</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option11" type="radio" class="ace" value="D"/>
-                                                        <span class="lbl">D.不满意</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4">12.能有效调节课堂信息，调动学生的学习积极性</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input name="option12" type="radio" class="ace" value="A"/>
-                                                        <span class="lbl">A.满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option12" type="radio" class="ace" value="B"/>
-                                                        <span class="lbl">B.比较满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option12" type="radio" class="ace" value="C"/>
-                                                        <span class="lbl">C.尚可</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option12" type="radio" class="ace" value="D"/>
-                                                        <span class="lbl">D.不满意</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4">13.总体来说，这门课的老师很称职，学习这门课收获很大</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input name="option13" type="radio" class="ace" value="A"/>
-                                                        <span class="lbl">A.满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option13" type="radio" class="ace" value="B"/>
-                                                        <span class="lbl">B.比较满意</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option13" type="radio" class="ace" value="C"/>
-                                                        <span class="lbl">C.尚可</span>
-                                                    </td>
-                                                    <td>
-                                                        <input name="option13" type="radio" class="ace" value="D"/>
-                                                        <span class="lbl">D.不满意</span>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            <div class="modal-footer no-margin-top">
-                                                <button class="btn btn-sm btn-success pull-right" type="submit">
-                                                    <i class="ace-icon fa fa-check"></i>提交
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- PAGE CONTENT ENDS -->
-                        <div id="modal-table1" class="modal fade" tabindex="-1">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header no-padding">
-                                        <div class="table-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                                <span class="white">&times;</span>
-                                            </button>
-                                            教学结果&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;满意程度(A:满意 B:比较满意 C:尚可 D:不满意)
-                                        </div>
-                                    </div>
-                                    <div class="modal-body no-padding">
-
-                                        <!--table table-striped table-bordered table-hover no-margin-bottom no-border-top-->
-                                        <table class="table table-striped table-advance table-hover">
-                                            <thead>
-                                            <tr>
-                                                <th colspan="3">评估内容</th>
-                                                <th></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td colspan="3">1.教学勤勉热忱，能按时上下课，不擅自停课，调课</td>
-                                                <td id="option1"></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3">2.上课能严格要求，认真辅导答疑，及时批改作业</td>
-                                                <td id="option2"></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3">3.平易近人，能虚心听取学生的意见和建议并及时改进工作</td>
-                                                <td id="option3"></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3">4.讲课有一定深度，有新意，给我留下了深刻的印象</td>
-                                                <td id="option4"></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3">5.思路清晰，概念准确，重点难点突出</td>
-                                                <td id="option5"></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3">6.能理论联系实际，及时介绍学科发展动态</td>
-                                                <td id="option6"></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3">7.本课程教材质量好，适合教学要求</td>
-                                                <td id="option7"></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3">8.语言清晰流畅，板书设计合理，字迹工整</td>
-                                                <td id="option8"></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3">9.能启迪学生思维，引导学生掌握学习方法和研究方法</td>
-                                                <td id="option9"></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3">10.注意因材施教，注重学生的个性发展和创新意识的培养</td>
-                                                <td id="option10"></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3">11.恰当运用现代化辅助教学手段提高教学效果</td>
-                                                <td id="option11"></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3">12.能有效调节课堂信息，调动学生的学习积极性</td>
-                                                <td id="option12"></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3">13.总体来说，这门课的老师很称职，学习这门课收获很大</td>
-                                                <td id="option13"></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <div class="modal-footer no-margin-top">
-                                        <button class="btn btn-sm btn-success pull-right" data-dismiss="modal">
-                                            <i class="ace-icon fa fa-check"></i>确定
-                                        </button>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- PAGE CONTENT ENDS -->
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
+                <div id="container" style="min-width:800px;height:600px"></div>
+                <script th:inline="javascript">
+                    var  chart = Highcharts.chart('container', {
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            options3d: {
+                                enabled: true,
+                                alpha: 45,
+                                beta: 0
+                            }
+                        },
+                        title: {
+                            text: '学生成绩扇形分析图'
+                        },
+                        tooltip: {
+                            headerFormat: '{series.name}<br>',
+                            pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                depth: 35,å›
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                    style: {
+                                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                    }
+                                },
+                                states: {
+                                    hover: {
+                                        enabled: false
+                                    }
+                                },
+                                slicedOffset: 20,         // 突出间距
+                                point: {                  // 每个扇区是数据点对象，所以事件应该写在 point 下面
+                                    events: {
+                                        // 鼠标滑过是，突出当前扇区
+                                        mouseOver: function() {
+                                            this.slice();
+                                        },
+                                        // 鼠标移出时，收回突出显示
+                                        mouseOut: function() {
+                                            this.slice();
+                                        },
+                                        // 默认是点击突出，这里屏蔽掉
+                                        click: function() {
+                                            return false;
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            name: '学生成绩分析',
+                            data: [
+                                ['85-100',   10.0],
+                                ['70-85',   5.0],
+                                ['60-70',   2.0],
+                                ['0-60',   1.0]
+                            ]
+                        }]
+                    });
+                    $(document).ready(function () {
+                        $.ajax({
+                            type:"GET",
+                            url:'/studentChooseCourse',//提供数据的Servlet
+                            success:function(data){
+                                //定义一个数组
+                                var browsers = [];
+                                //迭代，把异步获取的数据放到数组中
+                                $.each(data,function(i,d){
+                                    browsers.push([d.name,d.sumber]);
+                                });
+                                chart.series[0].setData(browsers);
+                            },
+                            error:function(e){
+                                alert(e);
+                            }
+                        });
+                    })
+                </script>
             </div><!-- /.page-content-area -->
         </div><!-- /.page-content -->
 
@@ -627,9 +249,9 @@
         <div class="footer-inner">
             <!-- #section:basics/footer -->
             <div class="footer-content">
-						<span class="bigger-120">
-							版权所有&copy;<a href="https://www.xijing.edu.cn/" target="_blank">西京学院</a>
-						</span>
+                <span class="bigger-120">
+                    版权所有&copy;<a href="https://www.xijing.edu.cn/" target="_blank">西京学院</a>
+                </span>
             </div>
 
             <!-- /section:basics/footer -->
@@ -646,30 +268,5 @@
 <script src="js/ace-elements.min.js"></script>
 <script src="js/ace.min.js"></script>
 
-<script type="text/javascript">
-    function editInfo(obj) {
-        var inputs = $(obj).parent().parent().parent().find("input");
-        $("#upId").val(inputs.eq(0).val());
-        $("#modal-table").modal("show");
-    }
-
-    function lookInfo(obj) {
-        var inputs = $(obj).parent().parent().parent().find("input");
-        alert($("#option1").val(inputs.eq(1).val()));
-        $("#option2").text(inputs.eq(2).val());
-        $("#option3").text(inputs.eq(3).val());
-        $("#option4").text(inputs.eq(4).val());
-        $("#option5").text(inputs.eq(5).val());
-        $("#option6").text(inputs.eq(6).val());
-        $("#option7").text(inputs.eq(7).val());
-        $("#option8").text(inputs.eq(8).val());
-        $("#option9").text(inputs.eq(9).val());
-        $("#option10").text(inputs.eq(10).val());
-        $("#option11").text(inputs.eq(11).val());
-        $("#option12").text(inputs.eq(12).val());
-        $("#option13").text(inputs.eq(13).val());
-        $("#modal-table1").modal("show");
-    }
-</script>
 </body>
 </html>

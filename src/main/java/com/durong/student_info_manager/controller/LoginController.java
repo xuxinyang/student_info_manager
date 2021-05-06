@@ -67,8 +67,8 @@ public class LoginController {
             }
             else if (roleService.findById(roleId).getRoleWeight() == 2) {
                 Teacher teacher = teacherService.findById(roleId);
-//                if (shaEncrypt.validatePwd(password, teacher.getTeacherPassword())) {
-                if (teacher.getTeacherPassword().equals(password)) {
+                if (shaEncrypt.validatePwd(password, teacher.getTeacherPassword())) {
+//                if (teacher.getTeacherPassword().equals(password)) {
                     model.addAttribute("teacher", teacher);
                     return "teacher/teachIndex";
                 } else {

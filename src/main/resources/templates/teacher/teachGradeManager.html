@@ -117,7 +117,7 @@
 				<b class="arrow"></b>
 			</li>
 			<li class="">
-				<a href="">
+                <a th:href="@{/teacherGradeAnalysis?teacherId=}+${teacher.teacherId}">
 					<i class="menu-icon fa fa-bar-chart-o"></i>
 					<span class="menu-text"> 成绩分析 </span>
 				</a>
@@ -406,8 +406,6 @@
                                                         <i class="ace-icon fa fa-check bigger-110"></i>
                                                         立即提交
                                                     </button>
-
-                                                    &nbsp; &nbsp; &nbsp;
                                                     <button class="btn" type="reset">
                                                         <i class="ace-icon fa fa-undo bigger-110"></i>
                                                         重置
@@ -440,89 +438,6 @@
         <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
     </a>
 </div><!-- /.main-container -->
-<!--<script th:inline="javascript">-->
-<!--    /*<![CDATA[*/-->
 
-<!--    $(document).ready(function () {-->
-<!--        //var teacherName = /*[[${teacher.teacherName}]]*/ null;-->
-<!--        //alert(teacherName);-->
-
-<!--        Highcharts.chart('chart', {-->
-<!--            chart: {-->
-<!--                type: 'column'-->
-<!--            },-->
-<!--            title: {-->
-<!--                text: '师生评教结果统计图'-->
-<!--            },-->
-<!--            subtitle: {-->
-<!--                text: 'Result of Comment'-->
-<!--            },-->
-<!--            xAxis: {-->
-<!--                categories: ['1.教学勤勉热忱，能按时上下课，不擅自停课，调课',-->
-<!--                    '2.上课能严格要求，认真辅导答疑，及时批改作业',-->
-<!--                    '3.平易近人，能虚心听取学生的意见和建议并及时改进工作',-->
-<!--                    '4.讲课有一定深度，有新意，给我留下了深刻的印象',-->
-<!--                    '5.思路清晰，概念准确，重点难点突出',-->
-<!--                    '6.能理论联系实际，及时介绍学科发展动态',-->
-<!--                    '7.本课程教材质量好，适合教学要求',-->
-<!--                    '8.语言清晰流畅，板书设计合理，字迹工整',-->
-<!--                    '9.能启迪学生思维，引导学生掌握学习方法和研究方法',-->
-<!--                    '10.注意因材施教，注重学生的个性发展和创新意识的培养',-->
-<!--                    '11.恰当运用现代化辅助教学手段提高教学效果',-->
-<!--                    '12.能有效调节课堂信息，调动学生的学习积极性',-->
-<!--                    '13.总体来说，这门课的老师很称职，学习这门课收获很大'],-->
-<!--                crosshair: true-->
-<!--            },-->
-<!--            yAxis: {-->
-<!--                min: 0,-->
-<!--                title: {-->
-<!--                    text: '等级票数 (张)'-->
-<!--                }-->
-<!--            },-->
-<!--            tooltip: {-->
-<!--                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',-->
-<!--                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +-->
-<!--                    '<td style="padding:0"><b>{point.y:.1f} 张</b></td></tr>',-->
-<!--                footerFormat: '</table>',-->
-<!--                shared: true,-->
-<!--                useHTML: true-->
-<!--            },-->
-<!--            plotOptions: {-->
-<!--                column: {-->
-<!--                    pointPadding: 0.1,-->
-<!--                    borderWidth: 0-->
-<!--                }-->
-<!--            },-->
-<!--            credits: {-->
-<!--                enabled: false-->
-<!--            },-->
-<!--            series: [{-->
-<!--                name: 'A：满意',-->
-<!--                data: /*[[${dataA}]]*/ []-->
-<!--            }, {-->
-<!--                name: 'B：比较满意',-->
-<!--                data: /*[[${dataB}]]*/ []-->
-<!--            }, {-->
-<!--                name: 'C：尚可',-->
-<!--                data: /*[[${dataC}]]*/ []-->
-<!--            }, {-->
-<!--                name: 'D：不满意',-->
-<!--                data: /*[[${dataD}]]*/ []-->
-<!--            }],-->
-<!--        })-->
-<!--        // var json = {};-->
-<!--        // json.chart = chart;-->
-<!--        // json.title = title;-->
-<!--        // json.subtitle = subtitle;-->
-<!--        // json.tooltip = tooltip;-->
-<!--        // json.xAxis = xAxis;-->
-<!--        // json.yAxis = yAxis;-->
-<!--        // json.series = series;-->
-<!--        // json.plotOptions = plotOptions;-->
-<!--        // json.credits = credits;-->
-<!--        // $("#chart").highcharts(json).show();-->
-<!--    });-->
-<!--    /*]]>*/-->
-<!--</script>-->
 </body>
 </html>

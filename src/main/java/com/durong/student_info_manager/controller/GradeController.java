@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class GradeController {
@@ -57,11 +59,17 @@ public class GradeController {
     public String studentLookGrade(Model model, String studentId) {
         List<Grade> grades = gradeService.findAllByStudentId(studentId);
         Student student = studentService.findById(studentId);
+        List<Course> courses = new ArrayList<Course>();
+        for (Grade grade : grades) {
+            Course course = courseService.findById(grade.getCourseId());
+            courses.add(course);
+        }
         model.addAttribute("grades", grades);
         model.addAttribute("student", student);
+        model.addAttribute("courses", courses);
         return "student/stuLookGrade";
     }
-    // 教师端通过课程ID进行查找
+    // 教师端通过教师ID进行查找
     @RequestMapping(value = "/teacherLookGrade", method = {RequestMethod.GET, RequestMethod.POST})
     public String teacherLookGrade(Model model, String teacherId) {
         List<Course> courses = courseService.findAllCourseByTeacherId(teacherId);
@@ -73,6 +81,22 @@ public class GradeController {
         model.addAttribute("teacher", teacher);
         model.addAttribute("grades", grades);
         return "teacher/teachGradeManager";
+    }
+
+    // 教师端通过教师ID进行查找并进行成绩的前端展示
+    @RequestMapping(value = "/teacherGradeAnalysis", method = {RequestMethod.GET, RequestMethod.POST})
+    public String teacherGradeAnalysis(Model model, String teacherId) {
+        Map<Course, List<Grade>> gradeMap = new HashMap<>();
+        List<Course> courses = courseService.findAllCourseByTeacherId(teacherId);
+        List<Grade> grades = new ArrayList<Grade>();
+        for (Course c : courses) {
+            gradeMap.put(c, gradeService.findAllByCourseId(c.getCourseId()));
+        }
+        Teacher teacher = teacherService.findById(teacherId);
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("grades", grades);
+        model.addAttribute("gradeMap", gradeMap);
+        return "teacher/teachGradeAnalysis";
     }
 
     // 查找操作 <-- end -->

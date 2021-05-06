@@ -53,4 +53,8 @@ public class CourseService {
     {
         return  courseRepository.findByTeacherId(teacherId);
     }
+
+    public void deleteByCourseId(Integer courseId) {
+        courseRepository.deleteById(courseId);
+    }
 }

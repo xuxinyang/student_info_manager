@@ -116,7 +116,7 @@
 						</ul>
 					</li>
 					<li class="">
-						<a href="/courseAll">
+						<a href="/findAllCourse">
 							<i class="menu-icon fa fa-pencil-square-o"></i>
 							<span class="menu-text"> 课程管理 </span>
 						</a>
@@ -190,11 +190,11 @@
 
 											<tbody>
 
-												<tr th:each="teacher:${teachers}">
+												<tr th:each="teacher, iter:${teachers}">
 													<td th:text="${teacher.teacherId}"></td>
 													<td th:text="${teacher.teacherName}"></td>
 													<td th:text="${teacher.teacherGender}"></td>
-													<td th:text="${teacher.teacherDepartment}==${department.departmentId}"></td>
+													<td th:text="${departments[iter.index].departmentName}"></td>
 													<td th:text="${teacher.teacherAddress}"></td>
 													<td th:text="${teacher.teacherPhone}"></td>
 													<td>
@@ -440,7 +440,7 @@
 					<!-- #section:basics/footer -->
 					<div class="footer-content">
 						<span class="bigger-120">
-							版权所有&copy;<a href="http://www.xapi.edu.cn/" target="_blank">西京学院</a>
+							版权所有&copy;<a href="https://www.xijing.edu.cn/" target="_blank">西京学院</a>
 						</span>
 					</div>
 

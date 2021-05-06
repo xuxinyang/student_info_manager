@@ -35,7 +35,7 @@
             <!-- #section:basics/navbar.layout.brand -->
             <a href="#" class="navbar-brand">
                 <small>
-                    <img src="img/avatars/logo.png" alt="" />
+                    <img src="img/sc_logo.png" alt="" />
                 </small>
             </a>
         </div>
@@ -124,7 +124,7 @@
                 <b class="arrow"></b>
             </li>
             <li class="active">
-                <a href="/courseAll">
+                <a href="/findAllCourse">
                     <i class="menu-icon fa fa-pencil-square-o"></i>
                     <span class="menu-text"> 课程管理 </span>
                 </a>
@@ -187,33 +187,27 @@
                                     <tr>
                                         <th class="center">课程编号</th>
                                         <th class="center">课程名称</th>
+                                        <th class="center">课程状态</th>
                                         <th class="center">教师编号</th>
                                         <th class="center">教师姓名</th>
-                                        <th class="center">学院</th>
-                                        <th class="center">专业</th>
-                                        <th class="center">班级</th>
-                                        <th class="center">学期</th>
                                         <th class="center">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="course:${courses}">
-                                        <input type="hidden" th:id="id" th:value="${course.id}"/>
+                                    <tr th:each="course, item:${courses}">
+                                        <input type="hidden" th:id="id" th:value="${course.courseId}"/>
                                         <td th:text="${course.courseId}"></td>
                                         <td th:text="${course.courseName}"></td>
+                                        <td th:text="${course.courseStatus}"></td>
                                         <td th:text="${course.teacherId}"></td>
-                                        <td th:text="${course.teacherName}"></td>
-                                        <td th:text="${course.department}"></td>
-                                        <td th:text="${course.major}"></td>
-                                        <td th:text="${course.classId}"></td>
-                                        <td th:text="${course.term}"></td>
+                                        <td th:text="${teachers[item.index].teacherName}"></td>
                                         <td>
                                             <div class="hidden-sm hidden-xs btn-group">
                                                 <a role="button" class="green" data-toggle="modal" onclick="editInfo(this);" href="javascript:void(0)">
                                                     <i class="ace-icon fa fa-pencil bigger-140"></i>
                                                 </a>
                                                 &nbsp;&nbsp;&nbsp;
-                                                <a th:href="@{/courseDelete?id=}+${course.id}" role="button" class="red"  data-toggle="modal">
+                                                <a th:href="@{/deleteByCourseId?courseId=}+${course.courseId}" role="button" class="red"  data-toggle="modal">
                                                     <i class="ace-icon fa fa-trash-o bigger-140"></i>
                                                 </a>
                                             </div>
@@ -226,7 +220,7 @@
                                         <li class="disabled">
                                             <a href="#">首页</a>
                                         </li>
-                                        <li class="active">
+                                        <li class="">
                                             <a href="#">上一页</a>
                                         </li>
                                         <li>
@@ -269,6 +263,11 @@
                                                     </tr>
                                                     <tr style="height: 15px;"></tr>
                                                     <tr>
+                                                        <td><label >课程状态：</label></td>
+                                                        <td><input type="text" id="courseStatus" name="courseStatus" class="col-xs-10 col-sm-10" th:required="required"/></td>
+                                                    </tr>
+                                                    <tr style="height: 15px;"></tr>
+                                                    <tr>
                                                         <td><label>教师编号：</label></td>
                                                         <td><input type="text" id="teacherId" name="teacherId" class="col-xs-10 col-sm-10" th:required="required" /></td>
                                                     </tr>
@@ -276,26 +275,6 @@
                                                     <tr>
                                                         <td><label>教师姓名：</label></td>
                                                         <td><input type="text" id="teacherName" name="teacherName" class="col-xs-10 col-sm-10" th:required="required" /></td>
-                                                    </tr>
-                                                    <tr style="height: 15px;"></tr>
-                                                    <tr>
-                                                        <td><label>学院：</label></td>
-                                                        <td><input type="text" id="department" name="department" class="col-xs-10 col-sm-10" th:required="required" /></td>
-                                                    </tr>
-                                                    <tr style="height: 15px;"></tr>
-                                                    <tr>
-                                                        <td><label>专业：</label></td>
-                                                        <td><input type="text" id="major" name="major" class="col-xs-10 col-sm-10" th:required="required" /></td>
-                                                    </tr>
-                                                    <tr style="height: 15px;"></tr>
-                                                    <tr>
-                                                        <td><label>班级：</label></td>
-                                                        <td><input type="text" id="grade" name="grade" class="col-xs-10 col-sm-10" th:required="required" /></td>
-                                                    </tr>
-                                                    <tr style="height: 15px;"></tr>
-                                                    <tr>
-                                                        <td><label>学期：</label></td>
-                                                        <td><input type="text" id="term" name="term" class="col-xs-10 col-sm-10" th:required="required" /></td>
                                                     </tr>
                                                     <tr style="height: 15px;"></tr>
                                                     <tr>
@@ -332,7 +311,7 @@
 
                                     <div class="modal-body no-padding">
                                         <!-- PAGE CONTENT BEGINS -->
-                                        <form class="form-horizontal" role="form" th:action="@{/courseAdd}" th:method="post">
+                                        <form class="form-horizontal" role="form" th:action="@{/addCourse}" th:method="post">
                                             <!-- #section:elements.form -->
                                             <div class="space-4"></div>
                                             <div class="form-group">
@@ -351,68 +330,22 @@
                                             <!-- /section:elements.form -->
                                             <div class="space-4"></div>
                                             <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right">课程状态：</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control" th:name="courseStatus"
+                                                            style="width: 368px;">
+                                                        <option value="">请选择课程状态</option>
+                                                        <option value="必修">必修</option>
+                                                        <option value="选修">选修</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!-- /section:elements.form -->
+                                            <div class="space-4"></div>
+                                            <div class="form-group">
                                                 <label class="col-sm-3 control-label no-padding-right">教师编号：</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" th:name="teacherId" th:required="required" placeholder="请输入教师编号" class="col-xs-10 col-sm-10" />
-                                                </div>
-                                            </div>
-                                            <div class="space-4"></div>
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label no-padding-right">教师名称：</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" th:name="teacherName" th:required="required" placeholder="请输入教师名称" class="col-xs-10 col-sm-10" />
-                                                </div>
-                                            </div>
-                                            <div class="space-4"></div>
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label no-padding-right">学院：</label>
-                                                <div class="col-sm-2">
-                                                    <div class="pos-rel">
-                                                        <select class="form-control" th:name="department" style="width: 368px;">
-                                                            <option value="">请选择学院</option>
-                                                            <option value="计算机学院">计算机学院</option>
-                                                            <option value="石油工程学院">石油工程学院</option>
-                                                            <option value="化学化工学院">化学化工学院</option>
-                                                            <option value="机械工程学院">机械工程学院</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="space-4"></div>
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label no-padding-right"  >专业：</label>
-                                                <div class="col-sm-2">
-                                                    <div class="pos-rel">
-                                                        <select class="form-control" th:name="major" style="width: 368px;" >
-                                                            <option value="">请选择专业</option>
-                                                            <option value="软件工程">软件工程</option>
-                                                            <option value="计算机科学与技术">计算机科学与技术</option>
-                                                            <option value="石油工程">石油工程</option>
-                                                            <option value="机械设计">机械设计</option>
-                                                            <option value="经济管理">经济管理</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="space-4"></div>
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label no-padding-right" >班级：</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" th:name="grade" th:required="required" placeholder="如1401" class="col-xs-10 col-sm-10"  />
-                                                </div>
-                                            </div>
-                                            <div class="space-4"></div>
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label no-padding-right">学期：</label>
-                                                <div class="col-sm-2">
-                                                    <div class="pos-rel">
-                                                        <select class="form-control" th:name="term" style="width: 368px;">
-                                                            <option value="">请选择学期</option>
-                                                            <option value="2017-2018-1">2017-2018-1</option>
-                                                            <option value="2017-2018-2">2017-2018-2</option>
-                                                            <option value="2017-2019-1">2018-2019-1</option>
-                                                        </select>
-                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="space-4"></div>
@@ -447,7 +380,7 @@
             <!-- #section:basics/footer -->
             <div class="footer-content">
                 <span class="bigger-120">
-                    版权所有&copy;<a href="http://www.xapi.edu.cn/" target="_blank">西京学院</a>
+                    版权所有&copy;<a href="https://www.xijing.edu.cn/" target="_blank">西京学院</a>
                 </span>
             </div>
 
@@ -468,12 +401,9 @@
         $("#updateId").val(logid.eq(0).val())
         $('#courseId').val(tds.eq(0).text());
         $('#courseName').val(tds.eq(1).text());
-        $("#teacherId").val(tds.eq(2).text());
-        $("#teacherName").val(tds.eq(3).text());
-        $("#department").val(tds.eq(4).text());
-        $("#major").val(tds.eq(5).text());
-        $("#grade").val(tds.eq(6).text());
-        $("#term").val(tds.eq(7).text());
+        $('#courseStatus').val(tds.eq(2).text());
+        $("#teacherId").val(tds.eq(3).text());
+        $("#teacherName").val(tds.eq(4).text());
         $("#modal-table1").modal("show");
     }
     function update() {
@@ -481,30 +411,24 @@
         var id = $("#updateId").val();
         var courseId = $("#courseId").val();
         var courseName = $("#courseName").val();
+        var courseStatus = $("#courseStatus").val();
         var teacherId = $("#teacherId").val();
         var teacherName = $("#teacherName").val();
-        var department = $("#department").val();
-        var major = $("#major").val();
-        var grade = $("#grade").val();
-        var term = $("#term").val();
         var course = {
             "id": id,
             "courseId": courseId,
             "courseName": courseName,
+            "courseStatus": courseStatus,
             "teacherId": teacherId,
             "teacherName": teacherName,
-            "department": department,
-            "major": major,
-            "classId": grade,
-            "term": term
         };
         $.ajax({
             type: "post",
-            url: "/courseUpdate",
+            url: "/updateCourse",
             async: true,
             cache: false,
             data: JSON.stringify(course),
-            dataType: "json",
+            dataType: "html",
             contentType: "application/json; charset=utf-8",
             success: function(data) {
                 console.log(data);
